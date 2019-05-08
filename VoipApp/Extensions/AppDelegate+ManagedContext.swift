@@ -1,0 +1,15 @@
+//
+//  AppDelegate+ManagedContext.swift
+//  VoipApp
+//
+//  Created by Luis  Costa on 08/05/2019.
+//  Copyright © 2019 Luis  Costa. All rights reserved.
+//
+
+import CoreData
+
+extension AppDelegate {
+    var managedContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+}

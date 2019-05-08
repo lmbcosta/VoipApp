@@ -8,22 +8,42 @@
 
 /* Begin PBXBuildFile section */
 		498EF613228361B9002AE48D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF612228361B9002AE48D /* AppDelegate.swift */; };
-		498EF615228361B9002AE48D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF614228361B9002AE48D /* ViewController.swift */; };
 		498EF618228361B9002AE48D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498EF616228361B9002AE48D /* Main.storyboard */; };
 		498EF61B228361B9002AE48D /* VoipApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 498EF619228361B9002AE48D /* VoipApp.xcdatamodeld */; };
 		498EF61D228361BB002AE48D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 498EF61C228361BB002AE48D /* Assets.xcassets */; };
 		498EF620228361BB002AE48D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498EF61E228361BB002AE48D /* LaunchScreen.storyboard */; };
+		498EF62B22836E7F002AE48D /* Call+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF62722836E7F002AE48D /* Call+CoreDataClass.swift */; };
+		498EF62C22836E7F002AE48D /* Call+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF62822836E7F002AE48D /* Call+CoreDataProperties.swift */; };
+		498EF62D22836E7F002AE48D /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF62922836E7F002AE48D /* Contact+CoreDataClass.swift */; };
+		498EF62E22836E7F002AE48D /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF62A22836E7F002AE48D /* Contact+CoreDataProperties.swift */; };
+		498EF63522836FEA002AE48D /* VoipModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF63422836FEA002AE48D /* VoipModels.swift */; };
+		498EF639228373A5002AE48D /* UIViewController+AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF638228373A5002AE48D /* UIViewController+AppDelegate.swift */; };
+		498EF63E228376DD002AE48D /* AppDelegate+ManagedContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF63D228376DD002AE48D /* AppDelegate+ManagedContext.swift */; };
+		498EF643228378A3002AE48D /* VoipContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF641228378A3002AE48D /* VoipContactCell.swift */; };
+		498EF644228378A3002AE48D /* VoipContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 498EF642228378A3002AE48D /* VoipContactCell.xib */; };
+		498EF6492283801E002AE48D /* CallHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF6482283801E002AE48D /* CallHistoryViewController.swift */; };
+		498EF64C22839372002AE48D /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF64B22839372002AE48D /* Date+Format.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		498EF60F228361B9002AE48D /* VoipApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoipApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		498EF612228361B9002AE48D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		498EF614228361B9002AE48D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		498EF617228361B9002AE48D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		498EF61A228361B9002AE48D /* VoipApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VoipApp.xcdatamodel; sourceTree = "<group>"; };
 		498EF61C228361BB002AE48D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		498EF61F228361BB002AE48D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		498EF621228361BB002AE48D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		498EF62722836E7F002AE48D /* Call+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Call+CoreDataClass.swift"; sourceTree = "<group>"; };
+		498EF62822836E7F002AE48D /* Call+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Call+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		498EF62922836E7F002AE48D /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataClass.swift"; sourceTree = "<group>"; };
+		498EF62A22836E7F002AE48D /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		498EF63422836FEA002AE48D /* VoipModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoipModels.swift; sourceTree = "<group>"; };
+		498EF638228373A5002AE48D /* UIViewController+AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AppDelegate.swift"; sourceTree = "<group>"; };
+		498EF63D228376DD002AE48D /* AppDelegate+ManagedContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+ManagedContext.swift"; sourceTree = "<group>"; };
+		498EF641228378A3002AE48D /* VoipContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoipContactCell.swift; sourceTree = "<group>"; };
+		498EF642228378A3002AE48D /* VoipContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoipContactCell.xib; sourceTree = "<group>"; };
+		498EF6482283801E002AE48D /* CallHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryViewController.swift; sourceTree = "<group>"; };
+		498EF64B22839372002AE48D /* Date+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +76,105 @@
 		498EF611228361B9002AE48D /* VoipApp */ = {
 			isa = PBXGroup;
 			children = (
+				498EF63722837386002AE48D /* Extensions */,
+				498EF63322836FD1002AE48D /* Models */,
+				498EF62F22836E8C002AE48D /* Database */,
+				498EF64522837F63002AE48D /* ViewControllers */,
+				498EF63F2283775E002AE48D /* Layout */,
 				498EF612228361B9002AE48D /* AppDelegate.swift */,
-				498EF614228361B9002AE48D /* ViewController.swift */,
-				498EF616228361B9002AE48D /* Main.storyboard */,
 				498EF61C228361BB002AE48D /* Assets.xcassets */,
-				498EF61E228361BB002AE48D /* LaunchScreen.storyboard */,
 				498EF621228361BB002AE48D /* Info.plist */,
-				498EF619228361B9002AE48D /* VoipApp.xcdatamodeld */,
 			);
 			path = VoipApp;
+			sourceTree = "<group>";
+		};
+		498EF62F22836E8C002AE48D /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				498EF619228361B9002AE48D /* VoipApp.xcdatamodeld */,
+				498EF63022836EFE002AE48D /* Entities */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		498EF63022836EFE002AE48D /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				498EF63222836F2F002AE48D /* Call */,
+				498EF63122836F26002AE48D /* Contact */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		498EF63122836F26002AE48D /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				498EF62922836E7F002AE48D /* Contact+CoreDataClass.swift */,
+				498EF62A22836E7F002AE48D /* Contact+CoreDataProperties.swift */,
+			);
+			path = Contact;
+			sourceTree = "<group>";
+		};
+		498EF63222836F2F002AE48D /* Call */ = {
+			isa = PBXGroup;
+			children = (
+				498EF62822836E7F002AE48D /* Call+CoreDataProperties.swift */,
+				498EF62722836E7F002AE48D /* Call+CoreDataClass.swift */,
+			);
+			path = Call;
+			sourceTree = "<group>";
+		};
+		498EF63322836FD1002AE48D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				498EF63422836FEA002AE48D /* VoipModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		498EF63722837386002AE48D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				498EF638228373A5002AE48D /* UIViewController+AppDelegate.swift */,
+				498EF63D228376DD002AE48D /* AppDelegate+ManagedContext.swift */,
+				498EF64B22839372002AE48D /* Date+Format.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		498EF63F2283775E002AE48D /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				498EF64022837870002AE48D /* Views */,
+				498EF61E228361BB002AE48D /* LaunchScreen.storyboard */,
+				498EF616228361B9002AE48D /* Main.storyboard */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		498EF64022837870002AE48D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				498EF64A22838161002AE48D /* VoipContactCell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		498EF64522837F63002AE48D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				498EF6482283801E002AE48D /* CallHistoryViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		498EF64A22838161002AE48D /* VoipContactCell */ = {
+			isa = PBXGroup;
+			children = (
+				498EF642228378A3002AE48D /* VoipContactCell.xib */,
+				498EF641228378A3002AE48D /* VoipContactCell.swift */,
+			);
+			path = VoipContactCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,6 +237,7 @@
 			files = (
 				498EF620228361BB002AE48D /* LaunchScreen.storyboard in Resources */,
 				498EF61D228361BB002AE48D /* Assets.xcassets in Resources */,
+				498EF644228378A3002AE48D /* VoipContactCell.xib in Resources */,
 				498EF618228361B9002AE48D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,9 +249,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				498EF62E22836E7F002AE48D /* Contact+CoreDataProperties.swift in Sources */,
+				498EF63E228376DD002AE48D /* AppDelegate+ManagedContext.swift in Sources */,
 				498EF61B228361B9002AE48D /* VoipApp.xcdatamodeld in Sources */,
-				498EF615228361B9002AE48D /* ViewController.swift in Sources */,
 				498EF613228361B9002AE48D /* AppDelegate.swift in Sources */,
+				498EF6492283801E002AE48D /* CallHistoryViewController.swift in Sources */,
+				498EF62B22836E7F002AE48D /* Call+CoreDataClass.swift in Sources */,
+				498EF64C22839372002AE48D /* Date+Format.swift in Sources */,
+				498EF62C22836E7F002AE48D /* Call+CoreDataProperties.swift in Sources */,
+				498EF639228373A5002AE48D /* UIViewController+AppDelegate.swift in Sources */,
+				498EF62D22836E7F002AE48D /* Contact+CoreDataClass.swift in Sources */,
+				498EF643228378A3002AE48D /* VoipContactCell.swift in Sources */,
+				498EF63522836FEA002AE48D /* VoipModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

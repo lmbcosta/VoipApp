@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Call" representedClassName="Call" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="cantactedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="calls" inverseEntity="Contact" syncable="YES"/>
+    </entity>
+    <entity name="Contact" representedClassName="Contact" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="calls" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Call" inverseName="cantactedBy" inverseEntity="Call" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Contact" positionX="-582.1484375" positionY="2.26953125" width="128" height="118"/>
+        <element name="Call" positionX="-54" positionY="18" width="128" height="103"/>
+    </elements>
+</model>
