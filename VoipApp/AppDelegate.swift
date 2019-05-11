@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let myContact = NSEntityDescription.insertNewObject(forEntityName: Contact.identifier, into: persistentContainer.viewContext) as! Contact
         myContact.id = 1
         myContact.image = nil
-        myContact.name = "Voip Dummy Contact ww  fwfwfw fwfwf wfwefwef wfwfw efwefwf"
+        myContact.name = "Voip Dummy Contact"
         myContact.number = "999999999"
         myContact.addToCalls(call)
 

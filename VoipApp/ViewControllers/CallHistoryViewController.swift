@@ -124,7 +124,7 @@ private extension CallHistoryViewController {
     // Show alert as call view
     func showCallScreen(forContact contact: Contact, uuid: UUID, callType: VoipModels.CallType) {
         tableView.isUserInteractionEnabled = false
-        let callView = UIAlertController.init(title: contact.number ?? contact.name ?? "", message: Strings.callingMessage, preferredStyle: .alert)
+        let callView = UIAlertController.init(title: contact.name ?? contact.number ?? "", message: Strings.callingMessage, preferredStyle: .alert)
         let action = UIAlertAction.init(title: Strings.endCallText, style: .destructive) { [unowned self] _ in
             self.tableView.isUserInteractionEnabled = true
             
