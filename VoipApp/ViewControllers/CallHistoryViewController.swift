@@ -15,13 +15,14 @@ class CallHistoryViewController: UIViewController {
         didSet {
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.register(VoipContactCell.self, forCellReuseIdentifier: VoipContactCell.description())
         }
     }
     
     // MARK: Properties
-    private lazy var managedContext: NSManagedObjectContext = self.appDelegate.managedContext
     private var calls: [Call] = []
+    private lazy var managedContext: NSManagedObjectContext = self.appDelegate.managedContext
+    private var callManager: CallManager!
+    private var callView: UIAlertController?
     
     // MARK: View Life Cycle
     override func viewWillAppear(_ animated: Bool) {
@@ -34,6 +35,11 @@ class CallHistoryViewController: UIViewController {
         super.viewDidLoad()
         
         setupNavigationBar()
+        
+        callManager = appDelegate.callManager
+        callManager.callEndHandler = { [weak self] (contact, callType) in
+            self?.handleEndCall(for: contact, with: callType)
+        }
     }
 }
 
@@ -43,6 +49,35 @@ extension CallHistoryViewController: UITableViewDelegate {
         guard calls.count > 0 else { return 0 }
         
         return VoipContactCell.height
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+        // Perform Outging call
+        let contact = calls[indexPath.item].cantactedBy
+        let uuid = UUID()
+        callManager.startCall(with: contact, uuid: uuid)
+        showCallScreen(forContact: contact, uuid: uuid, callType: .outgoing)
+    }
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return Strings.removeText
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let call = calls[indexPath.item]
+            
+            managedContext.delete(call)
+            appDelegate.saveContext()
+            
+            calls.remove(at: indexPath.item)
+            tableView.reloadData()
+        }
     }
 }
 
@@ -55,19 +90,21 @@ extension CallHistoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let call = calls[indexPath.item]
         let name = call.cantactedBy.name ?? Strings.uknownText
-        let dateText = call.date?.formatToDefaultStyle()
+        let dateText = call.date?.formatWithAppStyle()
         let callType = call.callType.rawValue.uppercased().capitalized
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: VoipContactCell.description()) as? VoipContactCell
-        cell?.configure(name: name, dateText: dateText, image: nil, callType: callType)
-        return cell ?? .init()
+        let cell = tableView.dequeueReusableCell(withIdentifier: VoipContactCell.identifier) as! VoipContactCell
+        cell.configure(name: name, dateText: dateText, image: nil, callType: callType)
+        
+        return cell
     }
 }
 
 private extension CallHistoryViewController {
     func fetchCalls() {
-        let request = NSFetchRequest<Call>.init(entityName: Call.description())
+        let request = NSFetchRequest<Call>.init(entityName: Call.identifier)
         request.sortDescriptors = [NSSortDescriptor.init(key: Strings.dateProperty, ascending: false)]
+        request.fetchLimit = Defaults.maxNumberOfResults
         
         if let savedCalls = try? managedContext.fetch(request) {
             calls = savedCalls
@@ -75,7 +112,6 @@ private extension CallHistoryViewController {
         
         tableView.reloadData()
     }
-    
     
     func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -85,9 +121,73 @@ private extension CallHistoryViewController {
         navigationItem.setLeftBarButton(buttonItem, animated: false)
     }
     
+    // Show alert as call view
+    func showCallScreen(forContact contact: Contact, uuid: UUID, callType: VoipModels.CallType) {
+        tableView.isUserInteractionEnabled = false
+        let callView = UIAlertController.init(title: contact.number ?? contact.name ?? "", message: Strings.callingMessage, preferredStyle: .alert)
+        let action = UIAlertAction.init(title: Strings.endCallText, style: .destructive) { [unowned self] _ in
+            self.tableView.isUserInteractionEnabled = true
+            
+            // Get current call
+            if let voipCall = self.callManager.callWithUUID(uuid: uuid) {
+                self.callManager.end(call: voipCall)
+            }
+            
+            self.callView = nil
+        }
+        callView.addAction(action)
+        
+        self.callView = callView
+        
+        self.present(callView, animated: true, completion: nil)
+        
+    }
+    
     @objc func incomingCallButtonTapped() {
-        // TODO: Simulate e receiving call
         print("Incomming Call")
+        
+        // Get Dummy Contact
+        let request = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
+        request.predicate = NSPredicate(format: "id == %d", 1)
+        guard let contact = try? managedContext.fetch(request).first else { return }
+        
+        // UUID for receiving Call
+        let uuid = UUID()
+        
+        // Simulate an incoming call
+        let backgroundTaskId = UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.appDelegate.provider.reportIncomingCall(from: contact, uuid: uuid, number: contact.number) { [weak self] _ in
+                UIApplication.shared.endBackgroundTask(backgroundTaskId)
+                self?.showCallScreen(forContact: contact, uuid: uuid, callType: .incoming)
+            }
+        }
+    }
+    
+    func handleEndCall(for contact: Contact, with type: VoipModels.CallType) {
+        if let callView = callView {
+            callView.dismiss(animated: true) { [weak self] in
+                self?.callView = nil
+                self?.tableView.isUserInteractionEnabled = true
+                self?.createNewHistoryCallRegister(for: contact, callType: type)
+                self?.fetchCalls()
+                return
+            }
+        }
+        else {
+            createNewHistoryCallRegister(for: contact, callType: type)
+            fetchCalls()
+        }
+    }
+    
+    func createNewHistoryCallRegister(for contact: Contact, callType: VoipModels.CallType) {
+        // Add new call to history calls
+        let newRegisterCall = NSEntityDescription.insertNewObject(forEntityName: Call.identifier, into: self.managedContext) as! Call
+        newRegisterCall.callType = callType
+        newRegisterCall.date = NSDate()
+        newRegisterCall.id = UUID()
+        newRegisterCall.cantactedBy = contact
+        self.appDelegate.saveContext()
     }
     
     struct Strings {
@@ -95,6 +195,13 @@ private extension CallHistoryViewController {
         static let incomingCallText = "Incoming Call"
         static let dateProperty = "date"
         static let uknownText = "Uknown"
+        static let callingMessage = "Calling..."
+        static let endCallText = "End Call"
+        static let removeText = "Remove"
+    }
+    
+    struct Defaults {
+        static let maxNumberOfResults = 50
     }
 }
 

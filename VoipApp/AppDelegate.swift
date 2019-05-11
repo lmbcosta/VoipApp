@@ -13,33 +13,33 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var callManager = CallManager()
+    var provider: ProviderConfigurator!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let call = NSEntityDescription.insertNewObject(forEntityName: Call.description(), into: persistentContainer.viewContext) as! Call
+        provider = ProviderConfigurator(callManager: callManager)
+        
+        let request = NSFetchRequest<Call>.init(entityName: Call.identifier)
+        if let count = try? persistentContainer.viewContext.fetch(request).count, count == 0 {
+            
+        }
+        
+        
+        let call = NSEntityDescription.insertNewObject(forEntityName: Call.identifier, into: persistentContainer.viewContext) as! Call
         call.id = UUID()
         call.date = NSDate()
         call.callType = .incoming
-        
-        let myContact = NSEntityDescription.insertNewObject(forEntityName: Contact.description(), into: persistentContainer.viewContext) as! Contact
+
+        let myContact = NSEntityDescription.insertNewObject(forEntityName: Contact.identifier, into: persistentContainer.viewContext) as! Contact
         myContact.id = 1
         myContact.image = nil
-        myContact.name = "Luís"
+        myContact.name = "Voip Dummy Contact ww  fwfwfw fwfwf wfwefwef wfwfw efwefwf"
+        myContact.number = "999999999"
         myContact.addToCalls(call)
-        
+
         saveContext()
 
-        let fetchRequest = NSFetchRequest<Call>.init(entityName: Call.description())
-        
-        if let calls = try? persistentContainer.viewContext.fetch(fetchRequest) {
-            let testCall = calls.first
-            
-            print(testCall)
-        }
-        else {
-            print("error")
-        }
         return true
     }
 

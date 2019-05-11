@@ -13,4 +13,16 @@ enum VoipModels {
         case incoming = "INCOMING"
         case outgoing = "OUTGOING"
     }
+    
+    enum CallState {
+        case connecting
+        case active
+        case held
+        case ended
+    }
+    
+    enum ConnectedState {
+        case pending
+        case complete
+    }
 }

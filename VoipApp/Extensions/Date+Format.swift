@@ -9,9 +9,36 @@
 import Foundation
 
 extension NSDate {
-    func formatToDefaultStyle() -> String {
+    func formatWithTodayHourStyle() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm dd-mm-yyyy"
-        return dateFormatter.string(from: self as Date)
+        dateFormatter.dateFormat = "HH:mm"
+        return "Today, " + dateFormatter.string(from: self as Date)
+    }
+    
+    func formatWithAppStyle() -> String {
+        let calendar = Calendar.current
+        
+        if calendar.isDateInToday(self as Date) {
+            return formatWithTodayHourStyle()
+        }
+        
+        return calendar.isDateInToday(self as Date) ?
+        formatWithTodayHourStyle() : formatAsWeekDayStyle() ?? ""
+    }
+    
+    func formatAsWeekDayStyle() -> String? {
+        let weekdays = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ]
+        
+        let component = Calendar.current.component(.weekday, from: self as Date)
+        return weekdays[component - 1]
     }
 }
+

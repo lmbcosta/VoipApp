@@ -20,6 +20,8 @@ extension Contact {
     @NSManaged public var image: NSDate?
     @NSManaged public var number: String?
     @NSManaged public var calls: NSOrderedSet
+    
+    static let identifier = "Contact"
 }
 
 // MARK: Generated accessors for calls

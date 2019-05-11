@@ -25,4 +25,6 @@ extension Call {
         get { return VoipModels.CallType(rawValue: type)! }
         set { type = newValue.rawValue }
     }
+    
+    static let identifier = "Call"
 }
