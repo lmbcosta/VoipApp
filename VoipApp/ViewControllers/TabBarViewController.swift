@@ -11,12 +11,16 @@ import UIKit
 class TabBarViewController: UITabBarController {
 
     private lazy var callHistoryVC = instantiateCallHistoryViewController()
+    private lazy var contactListVC = instantiateContactListViewController()
+    
+    private let mainStoryboard = UIStoryboard.init(name: Strings.storyboardName, bundle: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.viewControllers = [
-            UINavigationController(rootViewController: callHistoryVC)
+            UINavigationController(rootViewController: callHistoryVC),
+            UINavigationController(rootViewController: contactListVC)
         ]
     }
     
@@ -30,15 +34,22 @@ class TabBarViewController: UITabBarController {
 
 private extension TabBarViewController {
     func instantiateCallHistoryViewController() -> UIViewController {
-        let storyboard = UIStoryboard(name: Strings.storyboardName, bundle: nil)
-        let callHistoryVC = storyboard.instantiateViewController(withIdentifier: Strings.callHistoryIdentifier)
-        callHistoryVC.tabBarItem  = UITabBarItem.init(tabBarSystemItem: .history, tag: 0)
-        return callHistoryVC
+        
+        let vc = mainStoryboard.instantiateViewController(withIdentifier: Strings.callHistoryIdentifier)
+        vc.tabBarItem  = UITabBarItem.init(tabBarSystemItem: .history, tag: 0)
+        return vc
+    }
+    
+    func instantiateContactListViewController() -> UIViewController {
+        let vc = mainStoryboard.instantiateViewController(withIdentifier: Strings.contactListIdentifier)
+        vc.tabBarItem = UITabBarItem.init(tabBarSystemItem: .contacts, tag: 1)
+        return vc
     }
     
     struct Strings {
         static let storyboardName = "Main"
-        static let callHistoryIdentifier = "history-call-view-controller"
+        static let callHistoryIdentifier = "call-history-view-controller"
+        static let contactListIdentifier = "contact-list-view-controller"
         static let callHistoryTitle = "History"
     }
 }

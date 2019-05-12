@@ -9,6 +9,16 @@
 import Foundation
 
 enum VoipModels {
+    struct VoipContact {
+        let name: String
+        let number:  String
+    }
+    
+    struct ContactSection {
+        let title: String
+        let items: [VoipContact]
+    }
+    
     enum CallType: String {
         case incoming = "INCOMING"
         case outgoing = "OUTGOING"

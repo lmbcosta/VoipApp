@@ -170,6 +170,7 @@
 		498EF64022837870002AE48D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				49A9EDF42288B45700172EF7 /* FilterHeaderView */,
 				498EF64A22838161002AE48D /* VoipContactCell */,
 			);
 			path = Views;
@@ -192,6 +193,13 @@
 				49B623A822849DCC000B1454 /* VoipContactCell.swift */,
 			);
 			path = VoipContactCell;
+			sourceTree = "<group>";
+		};
+		49A9EDF42288B45700172EF7 /* FilterHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FilterHeaderView;
 			sourceTree = "<group>";
 		};
 		49B623AA2284A7C3000B1454 /* CallManager */ = {
