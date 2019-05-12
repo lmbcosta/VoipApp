@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		491EE74C228835B300FD6602 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EE74B228835B300FD6602 /* TabBarViewController.swift */; };
+		491EE74E22889F9100FD6602 /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491EE74D22889F9100FD6602 /* ContactListViewController.swift */; };
+		493AE21B2288A0E40031A3CC /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493AE21A2288A0E40031A3CC /* ContactDetailViewController.swift */; };
 		498EF613228361B9002AE48D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF612228361B9002AE48D /* AppDelegate.swift */; };
 		498EF618228361B9002AE48D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498EF616228361B9002AE48D /* Main.storyboard */; };
 		498EF61B228361B9002AE48D /* VoipApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 498EF619228361B9002AE48D /* VoipApp.xcdatamodeld */; };
@@ -29,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		491EE74B228835B300FD6602 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		491EE74D22889F9100FD6602 /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
+		493AE21A2288A0E40031A3CC /* ContactDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
 		498EF60F228361B9002AE48D /* VoipApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoipApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		498EF612228361B9002AE48D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		498EF617228361B9002AE48D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -173,6 +179,9 @@
 			isa = PBXGroup;
 			children = (
 				498EF6482283801E002AE48D /* CallHistoryViewController.swift */,
+				491EE74B228835B300FD6602 /* TabBarViewController.swift */,
+				491EE74D22889F9100FD6602 /* ContactListViewController.swift */,
+				493AE21A2288A0E40031A3CC /* ContactDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -283,6 +292,7 @@
 			files = (
 				498EF62E22836E7F002AE48D /* Contact+CoreDataProperties.swift in Sources */,
 				498EF63E228376DD002AE48D /* AppDelegate+ManagedContext.swift in Sources */,
+				493AE21B2288A0E40031A3CC /* ContactDetailViewController.swift in Sources */,
 				498EF61B228361B9002AE48D /* VoipApp.xcdatamodeld in Sources */,
 				49B1E89A2285128C00877028 /* ProviderConfigurator.swift in Sources */,
 				498EF613228361B9002AE48D /* AppDelegate.swift in Sources */,
@@ -290,7 +300,9 @@
 				498EF62B22836E7F002AE48D /* Call+CoreDataClass.swift in Sources */,
 				49B623AC2284A7D8000B1454 /* CallManager.swift in Sources */,
 				498EF64C22839372002AE48D /* Date+Format.swift in Sources */,
+				491EE74C228835B300FD6602 /* TabBarViewController.swift in Sources */,
 				498EF62C22836E7F002AE48D /* Call+CoreDataProperties.swift in Sources */,
+				491EE74E22889F9100FD6602 /* ContactListViewController.swift in Sources */,
 				49B1E8772284F15600877028 /* Audio.swift in Sources */,
 				498EF639228373A5002AE48D /* UIViewController+AppDelegate.swift in Sources */,
 				498EF62D22836E7F002AE48D /* Contact+CoreDataClass.swift in Sources */,

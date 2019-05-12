@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DCA-d0-vjz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,16 +10,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Cenas-->
+        <!--Call History View Controller-->
         <scene sceneID="fhr-kf-Q37">
             <objects>
-                <viewController id="sBj-Nk-hxo" customClass="CallHistoryViewController" customModule="VoipApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="history-call-view-controller" id="sBj-Nk-hxo" customClass="CallHistoryViewController" customModule="VoipApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sC7-aD-jRA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eVg-q8-Vet">
-                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoipContactCell" rowHeight="124" id="zUb-xc-gQq" customClass="VoipContactCell" customModule="VoipApp" customModuleProvider="target">
@@ -100,7 +100,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fcp-Ge-KgD"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Cenas" id="WxJ-CM-qmC"/>
                     <connections>
                         <outlet property="tableView" destination="eVg-q8-Vet" id="3zV-cc-HY4"/>
                     </connections>
@@ -109,26 +108,35 @@
             </objects>
             <point key="canvasLocation" x="1133.3333333333335" y="51.5625"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="3fQ-Hy-dDw">
+        <!--Contact List View Controller-->
+        <scene sceneID="9ES-vY-RKK">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DCA-d0-vjz" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="A6n-56-zwV">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="sBj-Nk-hxo" kind="relationship" relationship="rootViewController" id="Zts-Zr-phV"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dK8-dv-W87" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="contact-list-view-controller" id="7xl-G8-E3D" customClass="ContactListViewController" customModule="VoipApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="J35-GE-dak">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="z0l-4l-b1M"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IfQ-zD-sgW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="223.18840579710147" y="51.5625"/>
+            <point key="canvasLocation" x="1839" y="47"/>
+        </scene>
+        <!--Contact Detail View Controller-->
+        <scene sceneID="yRP-4h-MrG">
+            <objects>
+                <viewController storyboardIdentifier="contact-detail-view-controller" id="56p-Cz-sUT" customClass="ContactDetailViewController" customModule="VoipApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Doc-bL-ODW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="fOe-Mz-wQP"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H93-6N-cnE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2542" y="47"/>
         </scene>
     </scenes>
 </document>
