@@ -20,25 +20,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         provider = ProviderConfigurator(callManager: callManager)
         
-        let request = NSFetchRequest<Call>.init(entityName: Call.identifier)
-        if let count = try? persistentContainer.viewContext.fetch(request).count, count == 0 {
-            
-        }
+        // Add at least on call to Call history
+        insertVoipDummyCall()
         
-        
-        let call = NSEntityDescription.insertNewObject(forEntityName: Call.identifier, into: persistentContainer.viewContext) as! Call
-        call.id = UUID()
-        call.date = NSDate()
-        call.callType = .incoming
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = window
 
-        let myContact = NSEntityDescription.insertNewObject(forEntityName: Contact.identifier, into: persistentContainer.viewContext) as! Contact
-        myContact.id = 1
-        myContact.image = nil
-        myContact.name = "Voip Dummy Contact"
-        myContact.number = "999999999"
-        myContact.addToCalls(call)
-
-        saveContext()
+        let tabBar = TabBarViewController.init()
+        let navigationController = tabBar
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
 
         return true
     }
@@ -90,6 +81,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let nserror = error as NSError
                 print("Unresolved error \(nserror), \(nserror.userInfo)")
             }
+        }
+    }
+    
+    func insertVoipDummyCall() {
+        let request = NSFetchRequest<Call>.init(entityName: Call.identifier)
+        if let count = try? persistentContainer.viewContext.fetch(request).count, count == 0 {
+            let call = NSEntityDescription.insertNewObject(forEntityName: Call.identifier, into: persistentContainer.viewContext) as! Call
+            call.id = UUID()
+            call.date = NSDate()
+            call.callType = .incoming
+            
+            let myContact = NSEntityDescription.insertNewObject(forEntityName: Contact.identifier, into: persistentContainer.viewContext) as! Contact
+            myContact.id = 1
+            myContact.image = nil
+            myContact.name = "Voip Dummy Contact"
+            myContact.number = "999999999"
+            myContact.addToCalls(call)
+            
+            saveContext()
         }
     }
 }
