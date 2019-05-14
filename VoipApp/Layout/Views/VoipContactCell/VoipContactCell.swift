@@ -2,34 +2,17 @@
 //  VoipContactCell.swift
 //  VoipApp
 //
-//  Created by Luis  Costa on 09/05/2019.
+//  Created by Luis  Costa on 14/05/2019.
 //  Copyright © 2019 Luis  Costa. All rights reserved.
 //
 
 import UIKit
 
 class VoipContactCell: UITableViewCell {
-    
-    static let height: CGFloat = Defaults.cellHeight
     static let identifier = Defaults.identifier
+    static let height = Defaults.cellHeight
     
     // UI
-    @IBOutlet private weak var thumbnail: UIImageView! {
-        didSet {
-            thumbnail.contentMode = .scaleAspectFill
-            thumbnail.clipsToBounds = true
-        }
-    }
-    
-    @IBOutlet private weak var dateLabel: UILabel! {
-        didSet {
-            dateLabel.numberOfLines = 1
-            dateLabel.font = Defaults.secondaryFont
-            dateLabel.textColor = Defaults.secondaryColor
-            dateLabel.textAlignment = .right
-        }
-    }
-    
     @IBOutlet private weak var nameLabel: UILabel! {
         didSet {
             nameLabel.numberOfLines = 1
@@ -39,26 +22,29 @@ class VoipContactCell: UITableViewCell {
         }
     }
     
-    @IBOutlet private weak var typeLabel: UILabel! {
+    @IBOutlet private weak var phoneLabel: UILabel! {
         didSet {
-            typeLabel.numberOfLines = 1
-            typeLabel.font = Defaults.secondaryFont
-            typeLabel.textColor = Defaults.secondaryColor
-            typeLabel.textAlignment = .left
+            phoneLabel.numberOfLines = 1
+            phoneLabel.font = Defaults.secondaryFont
+            phoneLabel.textColor = Defaults.secondaryColor
+            phoneLabel.textAlignment = .left
         }
     }
     
-    override func layoutSubviews() {
-        thumbnail.layer.cornerRadius = thumbnail.bounds.height / 2
-        thumbnail.layer.masksToBounds = true
+    @IBOutlet private weak var voipAppLabel: UILabel! {
+        didSet {
+            voipAppLabel.numberOfLines = 1
+            voipAppLabel.font = Defaults.mainFont
+            voipAppLabel.textColor = Defaults.mainColor
+            voipAppLabel.textAlignment = .right
+            voipAppLabel.text = Strings.voipNumberText
+        }
     }
     
-    func configure(name: String, dateText: String?, image: UIImage?, callType: String?) {
+    func configure(name: String, phoneNumber: String, isVoipNumber: Bool) {
         nameLabel.text = name
-        dateLabel.text = dateText
-        let contactImage = image ?? Defaults.placeholder
-        thumbnail.image = UIImage.init(named: "milu")
-        typeLabel.text = callType
+        phoneLabel.text = phoneNumber
+        voipAppLabel.isHidden = !isVoipNumber
     }
 }
 
@@ -68,9 +54,11 @@ private extension VoipContactCell {
         static let secondaryFont = UIFont.systemFont(ofSize: 12, weight: .regular)
         static let mainColor = UIColor.black
         static let secondaryColor = UIColor.darkGray
-        static let placeholder = UIImage.init(named: "placeholder")
         static let cellHeight: CGFloat = 60
         static let identifier = "VoipContactCell"
     }
+    
+    struct Strings {
+        static let voipNumberText = "Voip Number"
+    }
 }
-

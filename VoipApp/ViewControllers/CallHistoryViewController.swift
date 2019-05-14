@@ -48,7 +48,7 @@ extension CallHistoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard calls.count > 0 else { return 0 }
         
-        return VoipContactCell.height
+        return VoipCallCell.height
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -76,7 +76,7 @@ extension CallHistoryViewController: UITableViewDelegate {
             appDelegate.saveContext()
             
             calls.remove(at: indexPath.item)
-            tableView.reloadData()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
 }
@@ -93,7 +93,7 @@ extension CallHistoryViewController: UITableViewDataSource {
         let dateText = call.date?.formatWithAppStyle()
         let callType = call.callType.rawValue.uppercased().capitalized
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: VoipContactCell.identifier) as! VoipContactCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: VoipCallCell.identifier) as! VoipCallCell
         cell.configure(name: name, dateText: dateText, image: nil, callType: callType)
         
         return cell

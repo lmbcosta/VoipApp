@@ -34,7 +34,6 @@ class TabBarViewController: UITabBarController {
 
 private extension TabBarViewController {
     func instantiateCallHistoryViewController() -> UIViewController {
-        
         let vc = mainStoryboard.instantiateViewController(withIdentifier: Strings.callHistoryIdentifier)
         vc.tabBarItem  = UITabBarItem.init(tabBarSystemItem: .history, tag: 0)
         return vc

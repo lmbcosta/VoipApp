@@ -12,11 +12,12 @@ enum VoipModels {
     struct VoipContact {
         let name: String
         let number:  String
+        let isVoipNumber: Bool
     }
     
     struct ContactSection {
         let title: String
-        let items: [VoipContact]
+        var contacts: [VoipContact]
     }
     
     enum CallType: String {
