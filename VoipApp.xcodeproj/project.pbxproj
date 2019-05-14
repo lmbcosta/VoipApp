@@ -26,6 +26,7 @@
 		498EF64C22839372002AE48D /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF64B22839372002AE48D /* Date+Format.swift */; };
 		49A9EDF7228B386800172EF7 /* VoipContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EDF6228B386800172EF7 /* VoipContactCell.swift */; };
 		49A9EDF9228B44EC00172EF7 /* String+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EDF8228B44EC00172EF7 /* String+Format.swift */; };
+		49A9EDFB228B7E6000172EF7 /* UIColor+SystemTintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EDFA228B7E6000172EF7 /* UIColor+SystemTintColor.swift */; };
 		49B1E8772284F15600877028 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B1E8762284F15600877028 /* Audio.swift */; };
 		49B1E89A2285128C00877028 /* ProviderConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B1E8992285128C00877028 /* ProviderConfigurator.swift */; };
 		49B623A922849DCC000B1454 /* VoipCallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B623A822849DCC000B1454 /* VoipCallCell.swift */; };
@@ -55,6 +56,7 @@
 		498EF64B22839372002AE48D /* Date+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		49A9EDF6228B386800172EF7 /* VoipContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoipContactCell.swift; sourceTree = "<group>"; };
 		49A9EDF8228B44EC00172EF7 /* String+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Format.swift"; sourceTree = "<group>"; };
+		49A9EDFA228B7E6000172EF7 /* UIColor+SystemTintColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SystemTintColor.swift"; sourceTree = "<group>"; };
 		49B1E8762284F15600877028 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		49B1E8992285128C00877028 /* ProviderConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderConfigurator.swift; sourceTree = "<group>"; };
 		49B623A822849DCC000B1454 /* VoipCallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoipCallCell.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				498EF63D228376DD002AE48D /* AppDelegate+ManagedContext.swift */,
 				498EF64B22839372002AE48D /* Date+Format.swift */,
 				49A9EDF8228B44EC00172EF7 /* String+Format.swift */,
+				49A9EDFA228B7E6000172EF7 /* UIColor+SystemTintColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				498EF62C22836E7F002AE48D /* Call+CoreDataProperties.swift in Sources */,
 				491EE74E22889F9100FD6602 /* ContactListViewController.swift in Sources */,
 				49B1E8772284F15600877028 /* Audio.swift in Sources */,
+				49A9EDFB228B7E6000172EF7 /* UIColor+SystemTintColor.swift in Sources */,
 				498EF639228373A5002AE48D /* UIViewController+AppDelegate.swift in Sources */,
 				498EF62D22836E7F002AE48D /* Contact+CoreDataClass.swift in Sources */,
 				49B623A922849DCC000B1454 /* VoipCallCell.swift in Sources */,

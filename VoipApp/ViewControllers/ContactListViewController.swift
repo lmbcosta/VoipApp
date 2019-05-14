@@ -53,7 +53,7 @@ extension ContactListViewController: UITableViewDelegate {
         
         let view = UIView()
         view.backgroundColor = .lightGray
-        let label = UILabel(frame: CGRect.init(x: 20, y: 0, width: tableView.frame.width - 20, height: Defaults.contactsHeaderHeight))
+        let label = UILabel(frame: CGRect.init(x: 20, y: 0, width: self.view.frame.width - 20 * 2, height: Defaults.contactsHeaderHeight))
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.text = currectSections[section - 1].title
         view.addSubview(label)
@@ -72,6 +72,27 @@ extension ContactListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let contact = currectSections[indexPath.section - 1].contacts[indexPath.item]
         showContactAlert(to: contact)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+        //return currectSections[indexPath.section - 1].contacts[indexPath.item].isVoipNumber
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let editAction = UITableViewRowAction.init(style: .default, title: "Edit") { (action, indexPath) in
+            // TODO:
+            print("Edit")
+        }
+        editAction.backgroundColor = .system
+        
+        let deleteAction = UITableViewRowAction.init(style: .default, title: "Delete") { (action, indexPath) in
+            // TODO:
+            print("Delete")
+        }
+        deleteAction.backgroundColor = .red
+        
+        return [deleteAction, editAction]
     }
 }
 
@@ -107,7 +128,7 @@ private extension ContactListViewController {
     }
     
     func setupSegmentedControll() {
-        let segmentedControl = UISegmentedControl(frame: CGRect(x: Defaults.segmentedHorozontalInset, y: Defaults.segmentedVerticalInset, width: tableView.frame.width - Defaults.segmentedHorozontalInset * 2, height: Defaults.segmentedHeight))
+        let segmentedControl = UISegmentedControl(frame: CGRect(x: Defaults.segmentedHorozontalInset, y: Defaults.segmentedVerticalInset, width: view.bounds.width - Defaults.segmentedHorozontalInset * 2, height: Defaults.segmentedHeight))
         segmentedControl.insertSegment(withTitle: Strings.allContactsText, at: 0, animated: false)
         segmentedControl.insertSegment(withTitle: Strings.voipContactsText, at: 1, animated: false)
         segmentedControl.selectedSegmentIndex = Defaults.allIndex
@@ -134,9 +155,11 @@ private extension ContactListViewController {
             try store.enumerateContacts(with: fetchRequest) { (contact, _) in
                 let name = contact.givenName + " " + contact.familyName
                 guard let number = contact.phoneNumbers.first?.value.stringValue.formatAsPhoneNumber() else { return }
+                
                 let isVoipNumber = filterNumbers.first(where: { $0 == number }) != nil
                 
-                let voipContact = VoipModels.VoipContact.init(name: name, number: number, isVoipNumber: isVoipNumber)
+                let voipContact = VoipModels.VoipContact.init(firstName: contact.givenName, familyName: contact.familyName, number: number, isVoipNumber: isVoipNumber)
+                
                 let key = name.prefix(1).capitalized
                 
                 if var value = dictionary[key] {

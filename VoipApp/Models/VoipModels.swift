@@ -10,9 +10,13 @@ import Foundation
 
 enum VoipModels {
     struct VoipContact {
-        let name: String
+        let firstName: String
+        let familyName: String
         let number:  String
         let isVoipNumber: Bool
+        
+        // Convinience
+        var name: String { return firstName + " " + familyName }
     }
     
     struct ContactSection {
