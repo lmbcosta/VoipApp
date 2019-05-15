@@ -15,6 +15,9 @@ protocol AvatarCellDelegate: class {
 }
 
 class AvatarCell: UICollectionViewCell {
+    static let height = Defaults.cellHeight
+    static let identifier = Strings.cellIIdentifier
+    
     // UI
     @IBOutlet private weak var avatarImage: UIImageView! {
         didSet {
@@ -125,6 +128,11 @@ private extension AvatarCell {
         static let okButtonText = "OK"
         static let galleryMessageText = "Gallery is not available"
         static let cancelText = "Cancel"
+        static let cellIIdentifier = "AvatarCell"
+    }
+    
+    struct Defaults {
+        static let cellHeight = CGFloat(200)
     }
 }
 

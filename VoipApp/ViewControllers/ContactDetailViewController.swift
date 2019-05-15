@@ -10,6 +10,15 @@ import UIKit
 
 class ContactDetailViewController: UIViewController {
 
+    // UI
+    @IBOutlet private weak var collectionView: UICollectionView! {
+        didSet {
+            collectionView.delegate = self
+            collectionView.dataSource = self
+            collectionView.register(AvatarCell.self, forCellWithReuseIdentifier: AvatarCell.identifier)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,4 +36,27 @@ class ContactDetailViewController: UIViewController {
     }
     */
 
+}
+
+// MARK: - UICollectionViewDelegate
+extension ContactDetailViewController: UICollectionViewDelegate {
+    
+}
+
+extension ContactDetailViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // TODO:
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // TODO:
+        return .init()
+    }
+    
+    
+}
+
+extension ContactDetailViewController: UICollectionViewDelegateFlowLayout {
+    
 }

@@ -13,22 +13,17 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var callManager = CallManager()
-    var provider: ProviderConfigurator!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        provider = ProviderConfigurator(callManager: callManager)
-        
         // Add at least on call to Call history
-        insertVoipDummyCall()
+        DatabaseManager.shared.createVoipDummyCall()
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
 
         let tabBar = TabBarViewController.init()
-        let navigationController = tabBar
-        self.window?.rootViewController = navigationController
+        self.window?.rootViewController = tabBar
         self.window?.makeKeyAndVisible()
 
         return true
@@ -55,52 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        self.saveContext()
-    }
-
-    // MARK: - Core Data stack
-
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "VoipApp")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                print("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
-
-    // MARK: - Core Data Saving support
-
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                print("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
-    
-    func insertVoipDummyCall() {
-        let request = NSFetchRequest<Call>.init(entityName: Call.identifier)
-        if let count = try? persistentContainer.viewContext.fetch(request).count, count == 0 {
-            let call = NSEntityDescription.insertNewObject(forEntityName: Call.identifier, into: persistentContainer.viewContext) as! Call
-            call.id = UUID()
-            call.date = NSDate()
-            call.callType = .incoming
-            
-            let myContact = NSEntityDescription.insertNewObject(forEntityName: Contact.identifier, into: persistentContainer.viewContext) as! Contact
-            myContact.id = 1
-            myContact.image = nil
-            myContact.name = "Voip Dummy Contact"
-            myContact.number = "999999999"
-            myContact.addToCalls(call)
-            
-            saveContext()
-        }
+        DatabaseManager.shared.saveContext()
     }
 }
 

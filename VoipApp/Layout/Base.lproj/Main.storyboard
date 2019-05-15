@@ -193,13 +193,35 @@
                     <view key="view" contentMode="scaleToFill" id="Doc-bL-ODW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XAe-ml-74P">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Pr5-pH-wVR">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fOe-Mz-wQP" firstAttribute="trailing" secondItem="XAe-ml-74P" secondAttribute="trailing" id="Nvf-Xq-FqF"/>
+                            <constraint firstItem="XAe-ml-74P" firstAttribute="top" secondItem="fOe-Mz-wQP" secondAttribute="top" id="cbD-9m-cg2"/>
+                            <constraint firstItem="XAe-ml-74P" firstAttribute="leading" secondItem="fOe-Mz-wQP" secondAttribute="leading" id="ccY-36-M2r"/>
+                            <constraint firstItem="fOe-Mz-wQP" firstAttribute="bottom" secondItem="XAe-ml-74P" secondAttribute="bottom" id="qkt-Th-B1r"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="fOe-Mz-wQP"/>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="XAe-ml-74P" id="MdV-tW-wv0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H93-6N-cnE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2542" y="47"/>
+            <point key="canvasLocation" x="2541.5999999999999" y="46.326836581709152"/>
         </scene>
     </scenes>
 </document>

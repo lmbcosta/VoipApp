@@ -21,7 +21,6 @@
 		498EF62E22836E7F002AE48D /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF62A22836E7F002AE48D /* Contact+CoreDataProperties.swift */; };
 		498EF63522836FEA002AE48D /* VoipModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF63422836FEA002AE48D /* VoipModels.swift */; };
 		498EF639228373A5002AE48D /* UIViewController+AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF638228373A5002AE48D /* UIViewController+AppDelegate.swift */; };
-		498EF63E228376DD002AE48D /* AppDelegate+ManagedContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF63D228376DD002AE48D /* AppDelegate+ManagedContext.swift */; };
 		498EF6492283801E002AE48D /* CallHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF6482283801E002AE48D /* CallHistoryViewController.swift */; };
 		498EF64C22839372002AE48D /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF64B22839372002AE48D /* Date+Format.swift */; };
 		49A9EDF7228B386800172EF7 /* VoipContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EDF6228B386800172EF7 /* VoipContactCell.swift */; };
@@ -29,6 +28,8 @@
 		49A9EDFB228B7E6000172EF7 /* UIColor+SystemTintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EDFA228B7E6000172EF7 /* UIColor+SystemTintColor.swift */; };
 		49A9EDFE228C92D900172EF7 /* AvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EDFC228C92D900172EF7 /* AvatarCell.swift */; };
 		49A9EDFF228C92D900172EF7 /* AvatarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49A9EDFD228C92D900172EF7 /* AvatarCell.xib */; };
+		49A9EE03228CA8B200172EF7 /* SystemContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EE02228CA8B200172EF7 /* SystemContactsManager.swift */; };
+		49A9EE06228CC57C00172EF7 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EE05228CC57C00172EF7 /* DatabaseManager.swift */; };
 		49B1E8772284F15600877028 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B1E8762284F15600877028 /* Audio.swift */; };
 		49B1E89A2285128C00877028 /* ProviderConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B1E8992285128C00877028 /* ProviderConfigurator.swift */; };
 		49B623A922849DCC000B1454 /* VoipCallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B623A822849DCC000B1454 /* VoipCallCell.swift */; };
@@ -53,7 +54,6 @@
 		498EF62A22836E7F002AE48D /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		498EF63422836FEA002AE48D /* VoipModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoipModels.swift; sourceTree = "<group>"; };
 		498EF638228373A5002AE48D /* UIViewController+AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AppDelegate.swift"; sourceTree = "<group>"; };
-		498EF63D228376DD002AE48D /* AppDelegate+ManagedContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+ManagedContext.swift"; sourceTree = "<group>"; };
 		498EF6482283801E002AE48D /* CallHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryViewController.swift; sourceTree = "<group>"; };
 		498EF64B22839372002AE48D /* Date+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		49A9EDF6228B386800172EF7 /* VoipContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoipContactCell.swift; sourceTree = "<group>"; };
@@ -61,6 +61,8 @@
 		49A9EDFA228B7E6000172EF7 /* UIColor+SystemTintColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SystemTintColor.swift"; sourceTree = "<group>"; };
 		49A9EDFC228C92D900172EF7 /* AvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCell.swift; sourceTree = "<group>"; };
 		49A9EDFD228C92D900172EF7 /* AvatarCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AvatarCell.xib; sourceTree = "<group>"; };
+		49A9EE02228CA8B200172EF7 /* SystemContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemContactsManager.swift; sourceTree = "<group>"; };
+		49A9EE05228CC57C00172EF7 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		49B1E8762284F15600877028 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		49B1E8992285128C00877028 /* ProviderConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderConfigurator.swift; sourceTree = "<group>"; };
 		49B623A822849DCC000B1454 /* VoipCallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoipCallCell.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 		498EF611228361B9002AE48D /* VoipApp */ = {
 			isa = PBXGroup;
 			children = (
+				49A9EE01228CA89300172EF7 /* SystemContactsManager */,
 				49B623B22284C595000B1454 /* Audio */,
 				49B623AF2284ADCF000B1454 /* ProviderConfigurator */,
 				49B623AA2284A7C3000B1454 /* CallManager */,
@@ -116,6 +119,7 @@
 		498EF62F22836E8C002AE48D /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				49A9EE04228CC56400172EF7 /* DatabaseManager */,
 				498EF619228361B9002AE48D /* VoipApp.xcdatamodeld */,
 				498EF63022836EFE002AE48D /* Entities */,
 			);
@@ -161,7 +165,6 @@
 			isa = PBXGroup;
 			children = (
 				498EF638228373A5002AE48D /* UIViewController+AppDelegate.swift */,
-				498EF63D228376DD002AE48D /* AppDelegate+ManagedContext.swift */,
 				498EF64B22839372002AE48D /* Date+Format.swift */,
 				49A9EDF8228B44EC00172EF7 /* String+Format.swift */,
 				49A9EDFA228B7E6000172EF7 /* UIColor+SystemTintColor.swift */,
@@ -231,6 +234,22 @@
 				49A9EDFC228C92D900172EF7 /* AvatarCell.swift */,
 			);
 			path = AvatarCell;
+			sourceTree = "<group>";
+		};
+		49A9EE01228CA89300172EF7 /* SystemContactsManager */ = {
+			isa = PBXGroup;
+			children = (
+				49A9EE02228CA8B200172EF7 /* SystemContactsManager.swift */,
+			);
+			path = SystemContactsManager;
+			sourceTree = "<group>";
+		};
+		49A9EE04228CC56400172EF7 /* DatabaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				49A9EE05228CC57C00172EF7 /* DatabaseManager.swift */,
+			);
+			path = DatabaseManager;
 			sourceTree = "<group>";
 		};
 		49B623AA2284A7C3000B1454 /* CallManager */ = {
@@ -332,17 +351,18 @@
 			files = (
 				49A9EDF9228B44EC00172EF7 /* String+Format.swift in Sources */,
 				498EF62E22836E7F002AE48D /* Contact+CoreDataProperties.swift in Sources */,
-				498EF63E228376DD002AE48D /* AppDelegate+ManagedContext.swift in Sources */,
 				493AE21B2288A0E40031A3CC /* ContactDetailViewController.swift in Sources */,
 				498EF61B228361B9002AE48D /* VoipApp.xcdatamodeld in Sources */,
 				49A9EDFE228C92D900172EF7 /* AvatarCell.swift in Sources */,
 				49B1E89A2285128C00877028 /* ProviderConfigurator.swift in Sources */,
+				49A9EE06228CC57C00172EF7 /* DatabaseManager.swift in Sources */,
 				498EF613228361B9002AE48D /* AppDelegate.swift in Sources */,
 				498EF6492283801E002AE48D /* CallHistoryViewController.swift in Sources */,
 				498EF62B22836E7F002AE48D /* Call+CoreDataClass.swift in Sources */,
 				49B623AC2284A7D8000B1454 /* CallManager.swift in Sources */,
 				498EF64C22839372002AE48D /* Date+Format.swift in Sources */,
 				491EE74C228835B300FD6602 /* TabBarViewController.swift in Sources */,
+				49A9EE03228CA8B200172EF7 /* SystemContactsManager.swift in Sources */,
 				498EF62C22836E7F002AE48D /* Call+CoreDataProperties.swift in Sources */,
 				491EE74E22889F9100FD6602 /* ContactListViewController.swift in Sources */,
 				49B1E8772284F15600877028 /* Audio.swift in Sources */,

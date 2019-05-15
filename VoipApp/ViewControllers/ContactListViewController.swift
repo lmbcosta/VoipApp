@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Contacts
 import CoreData
 
 class ContactListViewController: UIViewController {
@@ -20,7 +19,8 @@ class ContactListViewController: UIViewController {
         }
     }
     
-    private lazy var managedContext: NSManagedObjectContext = self.appDelegate.managedContext
+    private lazy var systemContactManager = SystemContactsManager()
+    private lazy var databaseManager = DatabaseManager.shared
     private var segmentedControl: UISegmentedControl!
     private var allSections: [VoipModels.ContactSection] = []
     private var filteredSections: [VoipModels.ContactSection] = []
@@ -77,15 +77,24 @@ extension ContactListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let editAction = UITableViewRowAction.init(style: .default, title: "Edit") { (action, indexPath) in
-            // TODO:
-            print("Edit")
+        let editAction = UITableViewRowAction.init(style: .default, title: "Edit") { [weak self] (action, indexPath) in
+            guard let self = self else { return }
+            
+            let contact = self.allSections[indexPath.section - 1].contacts[indexPath.item]
+            self.systemContactManager.execute(operation: .edit(contact: contact), then: { success in
+                // Reload
+            })
         }
         editAction.backgroundColor = .system
         
-        let deleteAction = UITableViewRowAction.init(style: .default, title: "Delete") { (action, indexPath) in
-            // TODO:
-            print("Delete")
+        let deleteAction = UITableViewRowAction.init(style: .default, title: "Delete") { [weak self] (action, indexPath) in
+            guard let self = self else { return }
+            
+            let contact = self.allSections[indexPath.section - 1].contacts[indexPath.item]
+            self.systemContactManager.execute(operation: .delete(identifier: contact.identifier), then: { [weak self] success in
+                self?.databaseManager.deleteContact(withPhoneNumber: contact.number)
+                // Reload
+            })
         }
         deleteAction.backgroundColor = .red
         
@@ -135,45 +144,8 @@ private extension ContactListViewController {
     }
     
     func fetchContacts() {
-        var dictionary: [String: VoipModels.ContactSection] = [:]
-        
-        let store = CNContactStore()
-        let filterNumbers = fetchVoipAppContactNumbers()
-        
-        store.requestAccess(for: .contacts) { (granted, error) in
-            guard error == nil else { return }
-            guard granted else { return }
-        }
-        
-        let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
-        let fetchRequest = CNContactFetchRequest.init(keysToFetch: keysToFetch as [CNKeyDescriptor])
-        
-        do {
-            try store.enumerateContacts(with: fetchRequest) { (contact, _) in
-                let name = contact.givenName + " " + contact.familyName
-                guard let number = contact.phoneNumbers.first?.value.stringValue.formatAsPhoneNumber() else { return }
-                
-                let isVoipNumber = filterNumbers.first(where: { $0 == number }) != nil
-                
-                let voipContact = VoipModels.VoipContact.init(firstName: contact.givenName, familyName: contact.familyName, number: number, isVoipNumber: isVoipNumber)
-                
-                let key = name.prefix(1).capitalized
-                
-                if var value = dictionary[key] {
-                    let contacts = value.contacts
-                    value.contacts = contacts + [voipContact]
-                }
-                else {
-                    dictionary[key] = VoipModels.ContactSection(title: key, contacts: [voipContact])
-                }
-            }
-        }
-        catch {
-            print("Error")
-        }
-        
-        allSections = dictionary.sorted(by: { $1.key > $0.key } )
-                             .map({ $0.value })
+        let phoneNumbers = databaseManager.fetchContacts()?.compactMap({ $0.number })
+        allSections = systemContactManager.fetchSectionedContacts(matchingPhoneNumbers: phoneNumbers ?? [])
         
         allSections.forEach { section in
             let contacts = section.contacts.filter({ $0.isVoipNumber })
@@ -181,16 +153,8 @@ private extension ContactListViewController {
                 filteredSections.append(VoipModels.ContactSection.init(title: section.title, contacts: contacts))
             }
         }
-    }
-    
-    func fetchVoipAppContactNumbers() -> [String] {
-        let request = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
         
-        guard let contacts = try? managedContext.fetch(request) else {
-            return []
-        }
-        
-        return contacts.compactMap({ $0.number })
+        tableView.reloadData()
     }
     
     func showContactAlert(to contact: VoipModels.VoipContact) {
@@ -203,28 +167,12 @@ private extension ContactListViewController {
             self?.tableView.isUserInteractionEnabled = true
             guard isValidContact else { return }
             
-            self?.createCall(to: contact, then: { [weak self] in
+            self?.databaseManager.createReceivingCall(fromNumber: contact.number, withName: contact.name, then: { [weak self] _ in
                 self?.navigateToCallHistory()
             })
         }))
         
         present(alert, animated: true, completion: nil)
-    }
-    
-    func createCall(to contact: VoipModels.VoipContact, then handler: () -> Void) {
-        let fetchRequest = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
-        let predicate = NSPredicate.init(format: "%K == %@ AND %K == %@", "number", contact.number, "name", contact.name)
-        fetchRequest.predicate = predicate
-        
-        if let voipContact = try? managedContext.fetch(fetchRequest).first {
-            let call = NSEntityDescription.insertNewObject(forEntityName: Call.identifier, into: managedContext) as! Call
-            call.id = UUID()
-            call.date = NSDate()
-            call.callType = .incoming
-            call.cantactedBy = voipContact
-            appDelegate.saveContext()
-            handler()
-        }
     }
     
     func navigateToCallHistory() {

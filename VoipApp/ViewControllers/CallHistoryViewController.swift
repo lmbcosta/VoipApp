@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 class CallHistoryViewController: UIViewController {
     // MARK: UI
@@ -20,8 +19,10 @@ class CallHistoryViewController: UIViewController {
     
     // MARK: Properties
     private var calls: [Call] = []
-    private lazy var managedContext: NSManagedObjectContext = self.appDelegate.managedContext
-    private var callManager: CallManager!
+    private lazy var callManager = CallManager()
+    private lazy var databaseManager = DatabaseManager.shared
+    
+    private var provider: ProviderConfigurator!
     private var callView: UIAlertController?
     
     // MARK: View Life Cycle
@@ -36,10 +37,11 @@ class CallHistoryViewController: UIViewController {
         
         setupNavigationBar()
         
-        callManager = appDelegate.callManager
         callManager.callEndHandler = { [weak self] (contact, callType) in
             self?.handleEndCall(for: contact, with: callType)
         }
+        
+        provider = ProviderConfigurator.init(callManager: callManager)
     }
 }
 
@@ -71,10 +73,8 @@ extension CallHistoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let call = calls[indexPath.item]
-            
-            managedContext.delete(call)
-            appDelegate.saveContext()
-            
+            databaseManager.delete(call: call)
+        
             calls.remove(at: indexPath.item)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
@@ -102,13 +102,7 @@ extension CallHistoryViewController: UITableViewDataSource {
 
 private extension CallHistoryViewController {
     func fetchCalls() {
-        let request = NSFetchRequest<Call>.init(entityName: Call.identifier)
-        request.sortDescriptors = [NSSortDescriptor.init(key: Strings.dateProperty, ascending: false)]
-        request.fetchLimit = Defaults.maxNumberOfResults
-        
-        if let savedCalls = try? managedContext.fetch(request) {
-            calls = savedCalls
-        }
+        if let savedCalls = databaseManager.fetchCalls() { calls = savedCalls }
         
         tableView.reloadData()
     }
@@ -144,12 +138,8 @@ private extension CallHistoryViewController {
     }
     
     @objc func incomingCallButtonTapped() {
-        print("Incomming Call")
-        
         // Get Dummy Contact
-        let request = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
-        request.predicate = NSPredicate(format: "id == %d", 1)
-        guard let contact = try? managedContext.fetch(request).first else { return }
+        guard let contact = databaseManager.fetchDummyContact() else { return }
         
         // UUID for receiving Call
         let uuid = UUID()
@@ -157,7 +147,7 @@ private extension CallHistoryViewController {
         // Simulate an incoming call
         let backgroundTaskId = UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.appDelegate.provider.reportIncomingCall(from: contact, uuid: uuid, number: contact.number) { [weak self] _ in
+            self?.provider.reportIncomingCall(from: contact, uuid: uuid, number: contact.number) { [weak self] _ in
                 UIApplication.shared.endBackgroundTask(backgroundTaskId)
                 self?.showCallScreen(forContact: contact, uuid: uuid, callType: .incoming)
             }
@@ -169,39 +159,24 @@ private extension CallHistoryViewController {
             callView.dismiss(animated: true) { [weak self] in
                 self?.callView = nil
                 self?.tableView.isUserInteractionEnabled = true
-                self?.createNewHistoryCallRegister(for: contact, callType: type)
+                self?.databaseManager.createCall(for: contact, with: type)
                 self?.fetchCalls()
                 return
             }
         }
         else {
-            createNewHistoryCallRegister(for: contact, callType: type)
+            databaseManager.createCall(for: contact, with: type)
             fetchCalls()
         }
-    }
-    
-    func createNewHistoryCallRegister(for contact: Contact, callType: VoipModels.CallType) {
-        // Add new call to history calls
-        let newRegisterCall = NSEntityDescription.insertNewObject(forEntityName: Call.identifier, into: self.managedContext) as! Call
-        newRegisterCall.callType = callType
-        newRegisterCall.date = NSDate()
-        newRegisterCall.id = UUID()
-        newRegisterCall.cantactedBy = contact
-        self.appDelegate.saveContext()
     }
     
     struct Strings {
         static let titleText = "Call History"
         static let incomingCallText = "Incoming Call"
-        static let dateProperty = "date"
         static let uknownText = "Uknown"
         static let callingMessage = "Calling..."
         static let endCallText = "End Call"
         static let removeText = "Remove"
-    }
-    
-    struct Defaults {
-        static let maxNumberOfResults = 50
     }
 }
 
