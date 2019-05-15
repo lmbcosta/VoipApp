@@ -73,8 +73,7 @@ extension ContactListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-        //return currectSections[indexPath.section - 1].contacts[indexPath.item].isVoipNumber
+        return currectSections[indexPath.section - 1].contacts[indexPath.item].isVoipNumber
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
