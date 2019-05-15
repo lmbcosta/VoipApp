@@ -12,6 +12,8 @@ class TabBarViewController: UITabBarController {
 
     private lazy var callHistoryVC = instantiateCallHistoryViewController()
     private lazy var contactListVC = instantiateContactListViewController()
+    private lazy var callHistoryTabBarItem = UITabBarItem.init(tabBarSystemItem: .history, tag: 0)
+    private lazy var contactsTabBarItem = UITabBarItem.init(tabBarSystemItem: .contacts, tag: 1)
     
     private let mainStoryboard = UIStoryboard.init(name: Strings.storyboardName, bundle: nil)
     
@@ -30,18 +32,23 @@ class TabBarViewController: UITabBarController {
         
         navigationController.popViewController(animated: false)
     }
+    
+    func routeToCallHistory() {
+        selectedIndex = 0
+        tabBar(tabBar, didSelect: callHistoryTabBarItem)
+    }
 }
 
 private extension TabBarViewController {
     func instantiateCallHistoryViewController() -> UIViewController {
         let vc = mainStoryboard.instantiateViewController(withIdentifier: Strings.callHistoryIdentifier)
-        vc.tabBarItem  = UITabBarItem.init(tabBarSystemItem: .history, tag: 0)
+        vc.tabBarItem  = callHistoryTabBarItem
         return vc
     }
     
     func instantiateContactListViewController() -> UIViewController {
         let vc = mainStoryboard.instantiateViewController(withIdentifier: Strings.contactListIdentifier)
-        vc.tabBarItem = UITabBarItem.init(tabBarSystemItem: .contacts, tag: 1)
+        vc.tabBarItem = contactsTabBarItem
         return vc
     }
     

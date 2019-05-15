@@ -21,12 +21,11 @@ class ContactListViewController: UIViewController {
     }
     
     private lazy var managedContext: NSManagedObjectContext = self.appDelegate.managedContext
-    private var colors: [UIColor] = [.red, .blue, .green, .yellow, .lightGray]
     private var segmentedControl: UISegmentedControl!
     private var allSections: [VoipModels.ContactSection] = []
     private var filteredSections: [VoipModels.ContactSection] = []
     
-    var currectSections: [VoipModels.ContactSection] {
+    private var currectSections: [VoipModels.ContactSection] {
         return segmentedControl.selectedSegmentIndex == Defaults.allIndex ?
             allSections : filteredSections
     }
@@ -36,7 +35,6 @@ class ContactListViewController: UIViewController {
 
         setupNavigationBar()
         setupSegmentedControll()
-        
         fetchContacts()
     }
 }
@@ -206,13 +204,15 @@ private extension ContactListViewController {
             self?.tableView.isUserInteractionEnabled = true
             guard isValidContact else { return }
             
-            self?.createCall(to: contact)
+            self?.createCall(to: contact, then: { [weak self] in
+                self?.navigateToCallHistory()
+            })
         }))
         
         present(alert, animated: true, completion: nil)
     }
     
-    func createCall(to contact: VoipModels.VoipContact) {
+    func createCall(to contact: VoipModels.VoipContact, then handler: () -> Void) {
         let fetchRequest = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
         let predicate = NSPredicate.init(format: "%K == %@ AND %K == %@", "number", contact.number, "name", contact.name)
         fetchRequest.predicate = predicate
@@ -224,7 +224,13 @@ private extension ContactListViewController {
             call.callType = .incoming
             call.cantactedBy = voipContact
             appDelegate.saveContext()
+            handler()
         }
+    }
+    
+    func navigateToCallHistory() {
+        guard let tabBar = self.appDelegate.window?.rootViewController as? TabBarViewController else { return }
+        tabBar.routeToCallHistory()
     }
     
     @objc func segmentedTapped(sender: UISegmentedControl) {
@@ -240,10 +246,9 @@ private extension ContactListViewController {
         static let allContactsText = "All Contacts"
         static let voipContactsText = "Voip Contacts"
         static let alertTitleText = "Voip App"
-        static let alertValidContactMessageString = "You received a call from %@, please check your history"
+        static let alertValidContactMessageString = "You received a call from %@!"
         static let alertInvalidContactMessageString = "%@ is not a Voip Contact. Please select another"
         static let alertButtonTitleText = "OK"
-        
     }
     
     struct Defaults {
