@@ -81,7 +81,10 @@ extension ContactListViewController: UITableViewDelegate {
             guard let self = self else { return }
             
             let contact = self.allSections[indexPath.section - 1].contacts[indexPath.item]
-            self.systemContactManager.execute(operation: .edit(contact: contact), then: { success in
+            self.systemContactManager.execute(operation: .edit(contact: contact), then: { [weak self] success in
+                if let id = contact.entityId {
+                    self?.databaseManager.updateContact(withId: id, phoneNumber: contact.number, name: contact.name, image: contact.avatar)
+                }
                 // Reload
             })
         }
@@ -92,7 +95,7 @@ extension ContactListViewController: UITableViewDelegate {
             
             let contact = self.allSections[indexPath.section - 1].contacts[indexPath.item]
             self.systemContactManager.execute(operation: .delete(identifier: contact.identifier), then: { [weak self] success in
-                self?.databaseManager.deleteContact(withPhoneNumber: contact.number)
+                if let id = contact.entityId { self?.databaseManager.deleteContact(withId: id) }
                 // Reload
             })
         }
@@ -144,8 +147,11 @@ private extension ContactListViewController {
     }
     
     func fetchContacts() {
-        let phoneNumbers = databaseManager.fetchContacts()?.compactMap({ $0.number })
-        allSections = systemContactManager.fetchSectionedContacts(matchingPhoneNumbers: phoneNumbers ?? [])
+        let phoneNumbers = databaseManager.fetchContacts()
+        var tuples = [(Int32, String)]()
+        phoneNumbers?.forEach({ tuples.append(($0.id, $0.number!)) })
+        
+        allSections = systemContactManager.fetchSectionedContacts(matchingIdsAndNumbers: tuples)
         
         allSections.forEach { section in
             let contacts = section.contacts.filter({ $0.isVoipNumber })

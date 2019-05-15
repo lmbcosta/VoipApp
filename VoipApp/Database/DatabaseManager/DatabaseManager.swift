@@ -6,7 +6,7 @@
 //  Copyright © 2019 Luis  Costa. All rights reserved.
 //
 
-
+import UIKit
 import CoreData
 
 final class DatabaseManager {
@@ -94,9 +94,9 @@ extension DatabaseManager {
         saveContext()
     }
     
-    func deleteContact(withPhoneNumber number: String) {
+    func deleteContact(withId id: Int32) {
         let fetchRequest = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
-        let predicate = NSPredicate(format: "number == %@", number)
+        let predicate = NSPredicate(format: "id == %d", id)
         fetchRequest.predicate = predicate
         
         if let contact = try? persistentContainer.viewContext.fetch(fetchRequest).first {
@@ -105,9 +105,20 @@ extension DatabaseManager {
         }
     }
     
-//    func updateContact(phoneNumber: String, name: String, image: UIImage?) {
-//
-//    }
+    func updateContact(withId id: Int32, phoneNumber: String, name: String, image: UIImage?) {
+        let fetchRequest = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
+        fetchRequest.predicate = NSPredicate(format: "id == %d", id)
+        
+        if let contact = try? persistentContainer.viewContext.fetch(fetchRequest).first {
+            contact.number = phoneNumber
+            contact.name = name
+//            if let image = image {
+//                contact.image = image
+//            }
+            saveContext()
+        }
+        
+    }
     
     func fetchCalls() -> [Call]? {
         let request = NSFetchRequest<Call>.init(entityName: Call.identifier)

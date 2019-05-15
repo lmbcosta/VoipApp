@@ -29,11 +29,10 @@ final class SystemContactsManager {
         }
     }
     
-    func fetchSectionedContacts(matchingPhoneNumbers numbers: [String]) -> [VoipModels.ContactSection] {
+    func fetchSectionedContacts(matchingIdsAndNumbers tuples: [(Int32, String)]) -> [VoipModels.ContactSection] {
         var dictionary: [String: VoipModels.ContactSection] = [:]
         
         let store = CNContactStore()
-        let filterNumbers = numbers
         
         store.requestAccess(for: .contacts) { (granted, error) in
             guard error == nil else { return }
@@ -49,9 +48,14 @@ final class SystemContactsManager {
                 let name = contact.givenName + " " + contact.familyName
                 guard let number = contact.phoneNumbers.first?.value.stringValue.formatAsPhoneNumber() else { return }
                 
-                let isVoipNumber = filterNumbers.first(where: { $0 == number }) != nil
+                var entityId: Int32?
+                let isVoipNumber = tuples.first(where: { (voipId, phoneNumber) -> Bool in
+                    guard phoneNumber == number else { return false }
+                    entityId = voipId
+                    return true
+                })
                 
-                let voipContact = VoipModels.VoipContact.init(firstName: contact.givenName, familyName: contact.familyName, number: number, isVoipNumber: isVoipNumber, identifier: contact.identifier)
+                let voipContact = VoipModels.VoipContact.init(entityId: entityId, firstName: contact.givenName, familyName: contact.familyName, number: number, isVoipNumber: (isVoipNumber != nil), identifier: contact.identifier)
                 
                 let key = name.prefix(1).capitalized
                 

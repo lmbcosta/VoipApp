@@ -10,6 +10,7 @@ import UIKit
 
 enum VoipModels {
     struct VoipContact {
+        let entityId: Int32?
         let firstName: String
         let familyName: String
         let number:  String
