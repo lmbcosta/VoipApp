@@ -21,13 +21,18 @@ class AvatarCell: UICollectionViewCell {
     // UI
     @IBOutlet private weak var avatarImage: UIImageView! {
         didSet {
-            avatarImage.contentMode = .scaleAspectFit
-            avatarImage.clipsToBounds = true
-            avatarImage.addGestureRecognizer(tapGestureRecognizer)
+            avatarImage.contentMode = .scaleToFill
+            avatarImage.layer.masksToBounds = true
         }
     }
     
-    private lazy var tapGestureRecognizer: UITapGestureRecognizer = buildTapGestureRecognizer()
+    @IBOutlet weak var control: UIControl! {
+        didSet {
+            control.addTarget(self, action: #selector(avatarImageTapped), for: .touchUpInside)
+            control.backgroundColor = .clear
+        }
+    }
+    
     private lazy var pickerController = buildPickerController()
     private weak var delegate: AvatarCellDelegate?
     private var isEditable = false
@@ -36,21 +41,17 @@ class AvatarCell: UICollectionViewCell {
         super.layoutSubviews()
         
         avatarImage.layer.cornerRadius = avatarImage.frame.height / 2
+        avatarImage.layer.masksToBounds = true
     }
     
-    func configure(with image: UIImage, isEditable: Bool) {
+    func configure(with image: UIImage, isEditable: Bool, delegate: AvatarCellDelegate?) {
         avatarImage.image = image
         self.isEditable = isEditable
+        self.delegate = delegate
     }
 }
 
 private extension AvatarCell {
-    func buildTapGestureRecognizer() -> UITapGestureRecognizer {
-        let tap = UITapGestureRecognizer.init(target: self, action: #selector(avatarImageTapped))
-        tap.numberOfTapsRequired = 1
-        return tap
-    }
-    
     func buildPickerController() -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = self

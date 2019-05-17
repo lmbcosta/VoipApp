@@ -46,11 +46,11 @@ enum VoipModels {
     
     enum ContactField {
         case avatar(image: UIImage)
-        case text(input: VoipModels.input)
+        case text(title: String, input: VoipModels.Input)
     }
     
-    enum input {
-        case name(text: String)
-        case phoneNumber(text: String)
+    enum Input {
+        case name(text: String?)
+        case phoneNumber(text: String?)
     }
 }

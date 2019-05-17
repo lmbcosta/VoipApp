@@ -134,7 +134,6 @@ private extension CallHistoryViewController {
         self.callView = callView
         
         self.present(callView, animated: true, completion: nil)
-        
     }
     
     @objc func incomingCallButtonTapped() {

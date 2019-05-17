@@ -23,6 +23,9 @@
 		498EF639228373A5002AE48D /* UIViewController+AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF638228373A5002AE48D /* UIViewController+AppDelegate.swift */; };
 		498EF6492283801E002AE48D /* CallHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF6482283801E002AE48D /* CallHistoryViewController.swift */; };
 		498EF64C22839372002AE48D /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EF64B22839372002AE48D /* Date+Format.swift */; };
+		49A1F379228F3EE400BAAF10 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A1F377228F3EE400BAAF10 /* TextFieldCell.swift */; };
+		49A1F37A228F3EE400BAAF10 /* TextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49A1F378228F3EE400BAAF10 /* TextFieldCell.xib */; };
+		49A1F37C228F76B500BAAF10 /* UITextField+doneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A1F37B228F76B500BAAF10 /* UITextField+doneButton.swift */; };
 		49A9EDF7228B386800172EF7 /* VoipContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EDF6228B386800172EF7 /* VoipContactCell.swift */; };
 		49A9EDF9228B44EC00172EF7 /* String+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EDF8228B44EC00172EF7 /* String+Format.swift */; };
 		49A9EDFB228B7E6000172EF7 /* UIColor+SystemTintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A9EDFA228B7E6000172EF7 /* UIColor+SystemTintColor.swift */; };
@@ -56,6 +59,9 @@
 		498EF638228373A5002AE48D /* UIViewController+AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AppDelegate.swift"; sourceTree = "<group>"; };
 		498EF6482283801E002AE48D /* CallHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryViewController.swift; sourceTree = "<group>"; };
 		498EF64B22839372002AE48D /* Date+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
+		49A1F377228F3EE400BAAF10 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
+		49A1F378228F3EE400BAAF10 /* TextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldCell.xib; sourceTree = "<group>"; };
+		49A1F37B228F76B500BAAF10 /* UITextField+doneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+doneButton.swift"; sourceTree = "<group>"; };
 		49A9EDF6228B386800172EF7 /* VoipContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoipContactCell.swift; sourceTree = "<group>"; };
 		49A9EDF8228B44EC00172EF7 /* String+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Format.swift"; sourceTree = "<group>"; };
 		49A9EDFA228B7E6000172EF7 /* UIColor+SystemTintColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SystemTintColor.swift"; sourceTree = "<group>"; };
@@ -168,6 +174,7 @@
 				498EF64B22839372002AE48D /* Date+Format.swift */,
 				49A9EDF8228B44EC00172EF7 /* String+Format.swift */,
 				49A9EDFA228B7E6000172EF7 /* UIColor+SystemTintColor.swift */,
+				49A1F37B228F76B500BAAF10 /* UITextField+doneButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -185,6 +192,7 @@
 		498EF64022837870002AE48D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				49A1F376228F3EC600BAAF10 /* TextFieldCell */,
 				49A9EE00228C92E300172EF7 /* AvatarCell */,
 				49A9EDF5228B383B00172EF7 /* VoipContactCell */,
 				49A9EDF42288B45700172EF7 /* FilterHeaderView */,
@@ -210,6 +218,15 @@
 				49B623A822849DCC000B1454 /* VoipCallCell.swift */,
 			);
 			path = VoipCallCell;
+			sourceTree = "<group>";
+		};
+		49A1F376228F3EC600BAAF10 /* TextFieldCell */ = {
+			isa = PBXGroup;
+			children = (
+				49A1F377228F3EE400BAAF10 /* TextFieldCell.swift */,
+				49A1F378228F3EE400BAAF10 /* TextFieldCell.xib */,
+			);
+			path = TextFieldCell;
 			sourceTree = "<group>";
 		};
 		49A9EDF42288B45700172EF7 /* FilterHeaderView */ = {
@@ -337,6 +354,7 @@
 			files = (
 				498EF620228361BB002AE48D /* LaunchScreen.storyboard in Resources */,
 				498EF61D228361BB002AE48D /* Assets.xcassets in Resources */,
+				49A1F37A228F3EE400BAAF10 /* TextFieldCell.xib in Resources */,
 				49A9EDFF228C92D900172EF7 /* AvatarCell.xib in Resources */,
 				498EF618228361B9002AE48D /* Main.storyboard in Resources */,
 			);
@@ -360,6 +378,7 @@
 				498EF6492283801E002AE48D /* CallHistoryViewController.swift in Sources */,
 				498EF62B22836E7F002AE48D /* Call+CoreDataClass.swift in Sources */,
 				49B623AC2284A7D8000B1454 /* CallManager.swift in Sources */,
+				49A1F37C228F76B500BAAF10 /* UITextField+doneButton.swift in Sources */,
 				498EF64C22839372002AE48D /* Date+Format.swift in Sources */,
 				491EE74C228835B300FD6602 /* TabBarViewController.swift in Sources */,
 				49A9EE03228CA8B200172EF7 /* SystemContactsManager.swift in Sources */,
@@ -368,6 +387,7 @@
 				49B1E8772284F15600877028 /* Audio.swift in Sources */,
 				49A9EDFB228B7E6000172EF7 /* UIColor+SystemTintColor.swift in Sources */,
 				498EF639228373A5002AE48D /* UIViewController+AppDelegate.swift in Sources */,
+				49A1F379228F3EE400BAAF10 /* TextFieldCell.swift in Sources */,
 				498EF62D22836E7F002AE48D /* Contact+CoreDataClass.swift in Sources */,
 				49B623A922849DCC000B1454 /* VoipCallCell.swift in Sources */,
 				498EF63522836FEA002AE48D /* VoipModels.swift in Sources */,

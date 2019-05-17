@@ -192,6 +192,9 @@ private extension ContactListViewController {
     
     @objc func addNewContactButtonTapped() {
         // TODO:
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let detailVC = storyboard.instantiateViewController(withIdentifier: "contact-detail-view-controller")
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     struct Strings {

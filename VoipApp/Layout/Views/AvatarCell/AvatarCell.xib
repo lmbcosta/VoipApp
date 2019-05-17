@@ -26,9 +26,19 @@
                             <constraint firstAttribute="width" constant="140" id="zwa-96-SrT"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Zo-wQ-O3R" customClass="UIControl">
+                        <rect key="frame" x="192" y="51.5" width="140" height="140"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="140" id="gZT-X6-ov2"/>
+                            <constraint firstAttribute="width" constant="140" id="grx-GO-BGi"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstItem="8Zo-wQ-O3R" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="BYH-2h-6n4"/>
+                <constraint firstItem="8Zo-wQ-O3R" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="acv-VG-B4n"/>
                 <constraint firstItem="Ory-P9-P33" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="cxn-26-qFp"/>
                 <constraint firstItem="Ory-P9-P33" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="jIS-He-ch1"/>
             </constraints>
@@ -36,6 +46,7 @@
             <size key="customSize" width="524" height="243"/>
             <connections>
                 <outlet property="avatarImage" destination="Ory-P9-P33" id="iNK-Nq-F16"/>
+                <outlet property="control" destination="8Zo-wQ-O3R" id="nhI-dm-Tw6"/>
             </connections>
             <point key="canvasLocation" x="14" y="96"/>
         </collectionViewCell>
