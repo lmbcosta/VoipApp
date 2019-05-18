@@ -35,13 +35,25 @@ class CallHistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        databaseManager.createVoipDummyCall { success in
+            if success {
+                SystemContactsManager.shared.askRequestAccess(then: { success in
+                    if success {
+                        SystemContactsManager.shared.createDummyContact(then: { [weak self] success in
+                            self?.fetchCalls()
+                        })
+                    }
+                })
+            }
+        }
+        
         setupNavigationBar()
         
-        callManager.callEndHandler = { [weak self] (contact, callType) in
+        self.callManager.callEndHandler = { [weak self] (contact, callType) in
             self?.handleEndCall(for: contact, with: callType)
         }
         
-        provider = ProviderConfigurator.init(callManager: callManager)
+        self.provider = ProviderConfigurator.init(callManager: self.callManager)
     }
 }
 
@@ -107,9 +119,12 @@ extension CallHistoryViewController: UITableViewDataSource {
 
 private extension CallHistoryViewController {
     func fetchCalls() {
-        if let savedCalls = databaseManager.fetchCalls() { calls = savedCalls }
-        
-        tableView.reloadData()
+        databaseManager.fetchCalls { [weak self] calls in
+            guard let calls = calls else { return }
+            
+            self?.calls = calls
+            self?.tableView.reloadData()
+        }
     }
     
     func setupNavigationBar() {

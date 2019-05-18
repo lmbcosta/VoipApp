@@ -21,7 +21,7 @@ class AvatarCell: UICollectionViewCell {
     // UI
     @IBOutlet private weak var avatarImage: UIImageView! {
         didSet {
-            avatarImage.contentMode = .scaleAspectFit
+            avatarImage.contentMode = .scaleAspectFill
             avatarImage.layer.masksToBounds = true
         }
     }

@@ -16,9 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // Add at least on call to Call history
-        DatabaseManager.shared.createVoipDummyCall()
-        
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
 

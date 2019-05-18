@@ -15,6 +15,8 @@ final class SystemContactsManager {
     
     private lazy var store = CNContactStore.init()
     
+    private var granted = false
+    
     enum Operation {
         case create(contact: VoipModels.VoipContact)
         case edit(contact: VoipModels.VoipContact)
@@ -23,7 +25,28 @@ final class SystemContactsManager {
     
     private init() {}
     
+    func askRequestAccess(then handler: @escaping (Bool) -> Void ) {
+        store.requestAccess(for: .contacts) { [weak self] (granted, error) in
+            guard error == nil else { return handler(false) }
+            guard granted else { return handler(false) }
+            
+            self?.granted = true
+            
+            handler(true)
+        }
+    }
+    
+    func createDummyContact(then handler: @escaping (Bool) -> Void) {
+        guard granted else { return handler(false) }
+        
+        let contact = VoipModels.VoipContact.init(entityId: nil, firstName: "Voip", familyName: "Dummy Contact", number: "999999999", isVoipNumber: true, identifier: nil, avatar: UIImage.init(named: "milu"))
+        createContact(contact: contact, then: handler)
+        
+    }
+    
     func execute(operation: SystemContactsManager.Operation, then handler: (Bool) -> Void) {
+        guard granted else { return handler(false) }
+        
         switch operation {
         case .create(let contact):
             createContact(contact: contact, then: handler)
@@ -35,14 +58,9 @@ final class SystemContactsManager {
     }
     
     func fetchSectionedContacts(matchingIdsAndNumbers tuples: [(Int32, String)], then handler: @escaping ([VoipModels.ContactSection]?) -> Void) {
+        guard granted else { return handler(nil) }
+        
         var dictionary: [String: VoipModels.ContactSection] = [:]
-        
-        let store = CNContactStore()
-        
-        store.requestAccess(for: .contacts) { (granted, error) in
-            guard error == nil else { return handler(nil) }
-            guard granted else { return handler(nil) }
-        }
         
         let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactImageDataKey]
         let fetchRequest = CNContactFetchRequest.init(keysToFetch: keysToFetch as [CNKeyDescriptor])
@@ -72,9 +90,9 @@ final class SystemContactsManager {
                 
                 let key = name.prefix(1).capitalized
                 
-                if var value = dictionary[key] {
+                if let value = dictionary[key] {
                     let contacts = value.contacts
-                    value.contacts = contacts + [voipContact]
+                    dictionary[key]?.contacts = contacts + [voipContact]
                 }
                 else {
                     dictionary[key] = VoipModels.ContactSection(title: key, contacts: [voipContact])
@@ -92,14 +110,11 @@ final class SystemContactsManager {
 
 private extension SystemContactsManager {
     func createContact(contact: VoipModels.VoipContact, then handler: (Bool) -> Void) {
-        let giveNamePredicate = CNContact.predicateForContacts(matchingName: contact.firstName)
-        let familyNamePredicate = CNContact.predicateForContacts(matchingName: contact.familyName)
+        let giveNamePredicate = CNContact.predicateForContacts(matchingName: contact.name)
+        
         let fetchRequest = CNContactFetchRequest(keysToFetch: [CNContactPhoneNumbersKey as CNKeyDescriptor])
         
-        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-            giveNamePredicate,
-            familyNamePredicate
-        ])
+        fetchRequest.predicate = giveNamePredicate
         
         var result = 0
         

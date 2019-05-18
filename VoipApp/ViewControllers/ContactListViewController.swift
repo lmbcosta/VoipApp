@@ -89,14 +89,20 @@ extension ContactListViewController: UITableViewDelegate {
         let deleteAction = UITableViewRowAction.init(style: .default, title: "Delete") { [weak self] (action, indexPath) in
             guard let self = self else { return }
             
-            let contact = self.allSections[indexPath.section - 1].contacts[indexPath.item]
+            let contact = self.currectSections[indexPath.section - 1].contacts[indexPath.item]
             
             guard let identifier = contact.identifier else { return }
+            guard let entityId = contact.entityId else { return }
             
-            
-            self.systemContactManager.execute(operation: .delete(identifier: identifier), then: { [weak self] success in
-                if let id = contact.entityId { self?.databaseManager.deleteContact(withId: id) }
-                // Reload
+            SystemContactsManager.shared.execute(operation: .delete(identifier: identifier), then: { [weak self] success in
+                guard success else {
+                    self?.showAlert(forDelete: .delete(success))
+                    return
+                }
+                
+                self?.databaseManager.deleteContact(withId: entityId, then: { success in
+                    self?.showAlert(forDelete: .delete(success))
+                })
             })
         }
         deleteAction.backgroundColor = .red
@@ -168,8 +174,9 @@ private extension ContactListViewController {
                 
                 self?.allSections = sections
                 
-                // Reset Filteres Sections
-                self?.filteredSections.removeAll()
+                // Reset Filters Sections
+                //self?.filteredSections.removeAll()
+                self?.filteredSections = []
                 
                 self?.allSections.forEach { section in
                     let contacts = section.contacts.filter({ $0.isVoipNumber })
@@ -179,7 +186,6 @@ private extension ContactListViewController {
                 }
                 
                 self?.tableView.reloadData()
-                
             })
         }
     }
@@ -221,6 +227,18 @@ private extension ContactListViewController {
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
+    func showAlert(forDelete result: VoipModels.OperationResult) {
+        guard case let .delete(success) = result else { return }
+        
+        let message = success ? Strings.successDeleteText : Strings.errorDeleteText
+        
+        let alert = UIAlertController.init(title: Strings.titleText, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: Strings.titleText, style: .default, handler: { [weak self] _ in
+            self?.fetchContacts()
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
     struct Strings {
         static let titleText = "Contacts"
         static let allContactsText = "All Contacts"
@@ -232,6 +250,8 @@ private extension ContactListViewController {
         static let firstNameText = "First Name:"
         static let familyNameText = "Family Name:"
         static let phoneNumberText = "Phone Number Text:"
+        static let errorDeleteText = "Unable to delete contact"
+        static let successDeleteText = "Contact successfully deleted"
     }
     
     struct Defaults {

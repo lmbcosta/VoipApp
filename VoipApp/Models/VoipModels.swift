@@ -65,5 +65,6 @@ enum VoipModels {
     enum OperationResult {
         case update(Bool)
         case create(Bool)
+        case delete(Bool)
     }
 }
