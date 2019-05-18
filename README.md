@@ -13,7 +13,7 @@ iOS 12.2
 
 
 ## Authors
-* **Luís Costa** - *iOS Developer* - [Linkedin](https://github.com/lmbcosta)
+* **Luís Costa** - *iOS Developer* - [Linkedin](https://www.linkedin.com/in/luis-miguel-costa/)
 
 ## License
 
