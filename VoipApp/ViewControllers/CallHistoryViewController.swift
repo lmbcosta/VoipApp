@@ -35,6 +35,14 @@ class CallHistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNavigationBar()
+        
+        self.callManager.callEndHandler = { [weak self] (contact, callType) in
+            self?.handleEndCall(for: contact, with: callType)
+        }
+        
+        self.provider = ProviderConfigurator.init(callManager: self.callManager)
+        
         databaseManager.createVoipDummyCall { success in
             if success {
                 SystemContactsManager.shared.askRequestAccess(then: { success in
@@ -46,14 +54,6 @@ class CallHistoryViewController: UIViewController {
                 })
             }
         }
-        
-        setupNavigationBar()
-        
-        self.callManager.callEndHandler = { [weak self] (contact, callType) in
-            self?.handleEndCall(for: contact, with: callType)
-        }
-        
-        self.provider = ProviderConfigurator.init(callManager: self.callManager)
     }
 }
 

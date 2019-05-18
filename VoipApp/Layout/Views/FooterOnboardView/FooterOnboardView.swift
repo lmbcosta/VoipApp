@@ -28,7 +28,7 @@ class FooterOnboardingView: UIView {
     
     @IBOutlet private weak var rightButton: UIButton! {
         didSet {
-            rightButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+            rightButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
             rightButton.clipsToBounds = true
             rightButton.layer.masksToBounds = true
             rightButton.addTarget(self, action: #selector(self.rightButtonTapped), for: .touchUpInside)

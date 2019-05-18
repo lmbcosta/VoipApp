@@ -205,7 +205,7 @@ extension DatabaseManager {
     
     func fetchDummyContact() -> Contact? {
         let request = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
-        request.predicate = NSPredicate(format: "id == %d", 1)
+        request.predicate = NSPredicate(format: "id == %d", 0)
         
         return try? persistentContainer.viewContext.fetch(request).first
     }
