@@ -39,14 +39,14 @@
 		49B623AC2284A7D8000B1454 /* CallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B623AB2284A7D8000B1454 /* CallManager.swift */; };
 		49B623AE2284A89C000B1454 /* VoipCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B623AD2284A89C000B1454 /* VoipCall.swift */; };
 		8069A94922907AA200901571 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8069A94822907AA200901571 /* KeyboardLayoutConstraint.swift */; };
-		8069A9532290813000901571 /* FooterOnboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8069A9522290813000901571 /* FooterOnboardView.swift */; };
-		8069A9552290841D00901571 /* FooterOnboardingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8069A9542290841D00901571 /* FooterOnboardingView.xib */; };
 		8069A9572290857900901571 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8069A9562290857900901571 /* Onboarding.storyboard */; };
 		8069A95A2290864000901571 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8069A9592290864000901571 /* OnboardingViewController.swift */; };
 		8069A95C229086E800901571 /* UIViewController+Child.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8069A95B229086E800901571 /* UIViewController+Child.swift */; };
 		8069A95E2290878600901571 /* OnboardingChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8069A95D2290878600901571 /* OnboardingChildViewController.swift */; };
 		8069A9602290888A00901571 /* CAAnimation+Callbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8069A95F2290888A00901571 /* CAAnimation+Callbacks.swift */; };
 		8069A9622290894000901571 /* UIView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8069A9612290894000901571 /* UIView+Animations.swift */; };
+		80C4B88F2290ADB900D28D95 /* FooterOnboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4B88D2290ADB900D28D95 /* FooterOnboardView.swift */; };
+		80C4B8902290ADB900D28D95 /* FooterOnboardingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80C4B88E2290ADB900D28D95 /* FooterOnboardingView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,14 +84,14 @@
 		49B623AB2284A7D8000B1454 /* CallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManager.swift; sourceTree = "<group>"; };
 		49B623AD2284A89C000B1454 /* VoipCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoipCall.swift; sourceTree = "<group>"; };
 		8069A94822907AA200901571 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
-		8069A9522290813000901571 /* FooterOnboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FooterOnboardView.swift; path = ../../../../../../Documents/FooterOnboardView.swift; sourceTree = "<group>"; };
-		8069A9542290841D00901571 /* FooterOnboardingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = FooterOnboardingView.xib; path = ../../../../../../Documents/FooterOnboardingView.xib; sourceTree = "<group>"; };
 		8069A9562290857900901571 /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		8069A9592290864000901571 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		8069A95B229086E800901571 /* UIViewController+Child.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Child.swift"; sourceTree = "<group>"; };
 		8069A95D2290878600901571 /* OnboardingChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingChildViewController.swift; sourceTree = "<group>"; };
 		8069A95F2290888A00901571 /* CAAnimation+Callbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAAnimation+Callbacks.swift"; sourceTree = "<group>"; };
 		8069A9612290894000901571 /* UIView+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animations.swift"; sourceTree = "<group>"; };
+		80C4B88D2290ADB900D28D95 /* FooterOnboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FooterOnboardView.swift; sourceTree = "<group>"; };
+		80C4B88E2290ADB900D28D95 /* FooterOnboardingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterOnboardingView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,7 +215,7 @@
 		498EF64022837870002AE48D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8069A951229080FE00901571 /* FooterOnboardView */,
+				80C4B88C2290ADB900D28D95 /* FooterOnboardView */,
 				49A1F376228F3EC600BAAF10 /* TextFieldCell */,
 				49A9EE00228C92E300172EF7 /* AvatarCell */,
 				49A9EDF5228B383B00172EF7 /* VoipContactCell */,
@@ -319,15 +319,6 @@
 			path = KeyboardLayoutContraint;
 			sourceTree = "<group>";
 		};
-		8069A951229080FE00901571 /* FooterOnboardView */ = {
-			isa = PBXGroup;
-			children = (
-				8069A9522290813000901571 /* FooterOnboardView.swift */,
-				8069A9542290841D00901571 /* FooterOnboardingView.xib */,
-			);
-			path = FooterOnboardView;
-			sourceTree = "<group>";
-		};
 		8069A9582290860E00901571 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -335,6 +326,15 @@
 				8069A95D2290878600901571 /* OnboardingChildViewController.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		80C4B88C2290ADB900D28D95 /* FooterOnboardView */ = {
+			isa = PBXGroup;
+			children = (
+				80C4B88D2290ADB900D28D95 /* FooterOnboardView.swift */,
+				80C4B88E2290ADB900D28D95 /* FooterOnboardingView.xib */,
+			);
+			path = FooterOnboardView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -396,12 +396,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				498EF620228361BB002AE48D /* LaunchScreen.storyboard in Resources */,
+				80C4B8902290ADB900D28D95 /* FooterOnboardingView.xib in Resources */,
 				498EF61D228361BB002AE48D /* Assets.xcassets in Resources */,
 				49A1F37A228F3EE400BAAF10 /* TextFieldCell.xib in Resources */,
 				49A9EDFF228C92D900172EF7 /* AvatarCell.xib in Resources */,
 				8069A9572290857900901571 /* Onboarding.storyboard in Resources */,
 				498EF618228361B9002AE48D /* Main.storyboard in Resources */,
-				8069A9552290841D00901571 /* FooterOnboardingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +419,7 @@
 				49A9EDFE228C92D900172EF7 /* AvatarCell.swift in Sources */,
 				8069A9602290888A00901571 /* CAAnimation+Callbacks.swift in Sources */,
 				8069A95C229086E800901571 /* UIViewController+Child.swift in Sources */,
+				80C4B88F2290ADB900D28D95 /* FooterOnboardView.swift in Sources */,
 				49B1E89A2285128C00877028 /* ProviderConfigurator.swift in Sources */,
 				49A9EE06228CC57C00172EF7 /* DatabaseManager.swift in Sources */,
 				498EF613228361B9002AE48D /* AppDelegate.swift in Sources */,
@@ -437,7 +438,6 @@
 				49B1E8772284F15600877028 /* Audio.swift in Sources */,
 				49A9EDFB228B7E6000172EF7 /* UIColor+SystemTintColor.swift in Sources */,
 				498EF639228373A5002AE48D /* UIViewController+AppDelegate.swift in Sources */,
-				8069A9532290813000901571 /* FooterOnboardView.swift in Sources */,
 				49A1F379228F3EE400BAAF10 /* TextFieldCell.swift in Sources */,
 				498EF62D22836E7F002AE48D /* Contact+CoreDataClass.swift in Sources */,
 				49B623A922849DCC000B1454 /* VoipCallCell.swift in Sources */,

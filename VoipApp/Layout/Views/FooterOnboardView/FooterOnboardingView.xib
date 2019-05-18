@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FooterOnboardingView" customModule="VoipApp" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="TLy-TL-nQC"/>
+                <outlet property="leftButton" destination="EXh-1h-0fp" id="k6l-c9-OnK"/>
+                <outlet property="pageControl" destination="wJz-oc-xnM" id="oHb-Ua-GyE"/>
+                <outlet property="rightButton" destination="EKJ-Ct-fY4" id="1wQ-5s-PaT"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="555" height="317"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EXh-1h-0fp">
+                    <rect key="frame" x="20" y="143.5" width="46" height="30"/>
+                    <state key="normal" title="Button"/>
+                </button>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="wJz-oc-xnM">
+                    <rect key="frame" x="258" y="140" width="39" height="37"/>
+                </pageControl>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EKJ-Ct-fY4">
+                    <rect key="frame" x="322" y="143.5" width="221" height="30"/>
+                    <state key="normal" title="Button"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="EKJ-Ct-fY4" secondAttribute="trailing" constant="12" id="EuC-Uq-0Tk"/>
+                <constraint firstItem="EKJ-Ct-fY4" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="JLQ-ie-8dF"/>
+                <constraint firstItem="wJz-oc-xnM" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Ltt-x6-r54"/>
+                <constraint firstItem="wJz-oc-xnM" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="PBN-6Z-TLu"/>
+                <constraint firstItem="EXh-1h-0fp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="ZMk-u8-KAE"/>
+                <constraint firstItem="EKJ-Ct-fY4" firstAttribute="leading" relation="lessThanOrEqual" secondItem="wJz-oc-xnM" secondAttribute="trailing" constant="25" id="tIf-r7-R2V"/>
+                <constraint firstItem="EXh-1h-0fp" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="viB-pY-8vX"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="33" y="64"/>
+        </view>
+    </objects>
+</document>
