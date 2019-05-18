@@ -17,7 +17,7 @@ extension Contact {
 
     @NSManaged public var id: Int32
     @NSManaged public var name: String?
-    @NSManaged public var image: NSDate?
+    @NSManaged public var image: NSData?
     @NSManaged public var number: String?
     @NSManaged public var calls: NSOrderedSet
     

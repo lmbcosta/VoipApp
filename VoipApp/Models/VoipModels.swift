@@ -15,8 +15,8 @@ enum VoipModels {
         let familyName: String
         let number:  String
         let isVoipNumber: Bool
-        let identifier: String
-        let avatar: UIImage? = nil
+        let identifier: String?
+        let avatar: UIImage?
         
         // Convinience
         var name: String { return firstName + " " + familyName }
@@ -45,12 +45,25 @@ enum VoipModels {
     }
     
     enum ContactField {
-        case avatar(image: UIImage)
+        case avatar(image: UIImage?)
         case text(title: String, input: VoipModels.Input)
+        
+        func getText() -> String? {
+            switch  self {
+            case .avatar: return nil
+            case .text(_, input: .name(let text)): return text == nil || text?.isEmpty == true ? nil : text
+            case .text(_, input: .phoneNumber(let text)): return text == nil || text?.isEmpty == true ? nil : text
+            }
+        }
     }
     
     enum Input {
         case name(text: String?)
         case phoneNumber(text: String?)
+    }
+    
+    enum OperationResult {
+        case update(Bool)
+        case create(Bool)
     }
 }

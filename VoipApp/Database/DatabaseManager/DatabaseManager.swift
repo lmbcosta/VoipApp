@@ -50,7 +50,7 @@ extension DatabaseManager {
             
             let myContact = NSEntityDescription.insertNewObject(forEntityName: Contact.identifier, into: persistentContainer.viewContext) as! Contact
             myContact.id = 1
-            myContact.image = nil
+            myContact.image = UIImage(named: "avatar-placeholder")?.pngData() as NSData?
             myContact.name = "Voip Dummy Contact"
             myContact.number = "999999999"
             myContact.addToCalls(call)
@@ -105,19 +105,47 @@ extension DatabaseManager {
         }
     }
     
-    func updateContact(withId id: Int32, phoneNumber: String, name: String, image: UIImage?) {
+    func updateContact(updatedContact: VoipModels.VoipContact, then handler: (Bool) -> Void) {
+        guard let id = updatedContact.entityId else { return handler(false) }
+        
         let fetchRequest = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
         fetchRequest.predicate = NSPredicate(format: "id == %d", id)
         
-        if let contact = try? persistentContainer.viewContext.fetch(fetchRequest).first {
-            contact.number = phoneNumber
-            contact.name = name
-//            if let image = image {
-//                contact.image = image
-//            }
+        do {
+            let contact = try persistentContainer.viewContext.fetch(fetchRequest).first
+            contact?.number = updatedContact.number
+            contact?.name = updatedContact.name
+            if let image = updatedContact.avatar {
+                contact?.image = image.pngData() as NSData?
+            }
             saveContext()
+            
+            handler(true)
         }
+        catch { handler(false) }
+    }
+    
+    func createContact(newContact: VoipModels.VoipContact, then handler: @escaping (Bool) -> Void) {
+        let fetchRequest = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
+        fetchRequest.predicate = NSPredicate(format: "number == %@ AND name == %@", newContact.number, newContact.name)
         
+        do {
+            guard try persistentContainer.viewContext.fetch(fetchRequest).first == nil else {
+                return handler(false)
+            }
+            
+            let contact =  NSEntityDescription.insertNewObject(forEntityName: Contact.identifier, into: persistentContainer.viewContext) as! Contact
+            contact.name = newContact.name
+            contact.number = newContact.number
+            if let image = newContact.avatar {
+                contact.image = image.pngData() as NSData?
+            }
+            
+            saveContext()
+            
+            handler(true)
+        }
+        catch { return handler(false) }
     }
     
     func fetchCalls() -> [Call]? {
@@ -128,11 +156,17 @@ extension DatabaseManager {
         return try? persistentContainer.viewContext.fetch(request)
     }
     
-    func fetchContacts() -> [Contact]? {
+    func fetchContacts(then handler: @escaping ([Contact]?) -> Void){
         let request = NSFetchRequest<Contact>.init(entityName: Contact.identifier)
         request.fetchLimit = Defaults.maxNumberOfResults
         
-        return try? persistentContainer.viewContext.fetch(request)
+        do {
+            let contacts =  try persistentContainer.viewContext.fetch(request)
+            handler(contacts)
+        }
+        catch {
+            return handler(nil)
+        }
     }
     
     func fetchDummyContact() -> Contact? {

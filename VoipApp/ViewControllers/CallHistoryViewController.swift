@@ -93,8 +93,13 @@ extension CallHistoryViewController: UITableViewDataSource {
         let dateText = call.date?.formatWithAppStyle()
         let callType = call.callType.rawValue.uppercased().capitalized
         
+        var image: UIImage? {
+            guard let data = call.cantactedBy.image else { return nil }
+            return UIImage.init(data: data as Data)
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: VoipCallCell.identifier) as! VoipCallCell
-        cell.configure(name: name, dateText: dateText, image: nil, callType: callType)
+        cell.configure(name: name, dateText: dateText, image: image, callType: callType)
         
         return cell
     }

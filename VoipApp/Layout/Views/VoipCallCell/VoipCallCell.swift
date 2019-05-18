@@ -56,8 +56,7 @@ class VoipCallCell: UITableViewCell {
     func configure(name: String, dateText: String?, image: UIImage?, callType: String?) {
         nameLabel.text = name
         dateLabel.text = dateText
-        let contactImage = image ?? Defaults.placeholder
-        thumbnail.image = UIImage.init(named: "milu")
+        thumbnail.image = image ?? Defaults.placeholder
         typeLabel.text = callType
     }
 }
@@ -68,7 +67,7 @@ private extension VoipCallCell {
         static let secondaryFont = UIFont.systemFont(ofSize: 12, weight: .regular)
         static let mainColor = UIColor.black
         static let secondaryColor = UIColor.darkGray
-        static let placeholder = UIImage.init(named: "placeholder")
+        static let placeholder = UIImage.init(named: "avatar-placeholder")
         static let cellHeight: CGFloat = 60
         static let identifier = "VoipCallCell"
     }

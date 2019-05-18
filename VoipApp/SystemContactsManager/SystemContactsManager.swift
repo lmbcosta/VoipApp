@@ -10,6 +10,9 @@ import UIKit
 import Contacts
 
 final class SystemContactsManager {
+    
+    static let shared = SystemContactsManager()
+    
     private lazy var store = CNContactStore.init()
     
     enum Operation {
@@ -17,6 +20,8 @@ final class SystemContactsManager {
         case edit(contact: VoipModels.VoipContact)
         case delete(identifier: String)
     }
+    
+    private init() {}
     
     func execute(operation: SystemContactsManager.Operation, then handler: (Bool) -> Void) {
         switch operation {
@@ -29,24 +34,27 @@ final class SystemContactsManager {
         }
     }
     
-    func fetchSectionedContacts(matchingIdsAndNumbers tuples: [(Int32, String)]) -> [VoipModels.ContactSection] {
+    func fetchSectionedContacts(matchingIdsAndNumbers tuples: [(Int32, String)], then handler: @escaping ([VoipModels.ContactSection]?) -> Void) {
         var dictionary: [String: VoipModels.ContactSection] = [:]
         
         let store = CNContactStore()
         
         store.requestAccess(for: .contacts) { (granted, error) in
-            guard error == nil else { return }
-            guard granted else { return }
+            guard error == nil else { return handler(nil) }
+            guard granted else { return handler(nil) }
         }
         
-        let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
+        let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactImageDataKey]
         let fetchRequest = CNContactFetchRequest.init(keysToFetch: keysToFetch as [CNKeyDescriptor])
         
         do {
             try store.enumerateContacts(with: fetchRequest) { (contact, _) in
                 
                 let name = contact.givenName + " " + contact.familyName
-                guard let number = contact.phoneNumbers.first?.value.stringValue.formatAsPhoneNumber() else { return }
+                
+                print("Name: \(name)")
+                
+                guard let number = contact.phoneNumbers.first?.value.stringValue.formatAsPhoneNumber() else { return handler(nil) }
                 
                 var entityId: Int32?
                 let isVoipNumber = tuples.first(where: { (voipId, phoneNumber) -> Bool in
@@ -55,7 +63,12 @@ final class SystemContactsManager {
                     return true
                 })
                 
-                let voipContact = VoipModels.VoipContact.init(entityId: entityId, firstName: contact.givenName, familyName: contact.familyName, number: number, isVoipNumber: (isVoipNumber != nil), identifier: contact.identifier)
+                var avatar: UIImage? {
+                    guard let data = contact.imageData else { return nil }
+                    return UIImage.init(data: data)
+                }
+                
+                let voipContact = VoipModels.VoipContact.init(entityId: entityId, firstName: contact.givenName, familyName: contact.familyName, number: number, isVoipNumber: (isVoipNumber != nil), identifier: contact.identifier, avatar: avatar)
                 
                 let key = name.prefix(1).capitalized
                 
@@ -66,15 +79,14 @@ final class SystemContactsManager {
                 else {
                     dictionary[key] = VoipModels.ContactSection(title: key, contacts: [voipContact])
                 }
+                
+                let sections = dictionary.sorted(by: { $1.key > $0.key })
+                                         .map({ $0.value })
+                
+                handler(sections)
             }
         }
-        catch {
-            print("Error")
-        }
-        
-        return dictionary.sorted(by: { $1.key > $0.key } )
-                         .map({ $0.value })
-        
+        catch { handler(nil) }
     }
 }
 
@@ -127,8 +139,20 @@ private extension SystemContactsManager {
     }
     
     func updateContact(contact: VoipModels.VoipContact, then handler: (Bool) -> Void) {
+        guard let identifier = contact.identifier else {
+            return handler(false)
+        }
+        
+        
         do {
-            let cn = try store.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [])
+            let keys = [
+                CNContactGivenNameKey,
+                CNContactFamilyNameKey,
+                CNContactPhoneNumbersKey,
+                CNContactImageDataKey
+            ]
+            
+            let cn = try store.unifiedContact(withIdentifier: identifier, keysToFetch: keys as [CNKeyDescriptor])
             let contactToUpdate = cn.mutableCopy() as! CNMutableContact
             contactToUpdate.givenName = contact.firstName
             contactToUpdate.familyName = contact.familyName

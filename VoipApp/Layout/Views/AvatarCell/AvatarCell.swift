@@ -21,7 +21,7 @@ class AvatarCell: UICollectionViewCell {
     // UI
     @IBOutlet private weak var avatarImage: UIImageView! {
         didSet {
-            avatarImage.contentMode = .scaleToFill
+            avatarImage.contentMode = .scaleAspectFit
             avatarImage.layer.masksToBounds = true
         }
     }
@@ -44,8 +44,10 @@ class AvatarCell: UICollectionViewCell {
         avatarImage.layer.masksToBounds = true
     }
     
-    func configure(with image: UIImage, isEditable: Bool, delegate: AvatarCellDelegate?) {
-        avatarImage.image = image
+    func configure(with image: UIImage?, isEditable: Bool, delegate: AvatarCellDelegate?) {
+        let thumbnail = image ?? Defaults.placeholder
+        avatarImage.image = thumbnail
+        
         self.isEditable = isEditable
         self.delegate = delegate
     }
@@ -134,6 +136,7 @@ private extension AvatarCell {
     
     struct Defaults {
         static let cellHeight = CGFloat(200)
+        static let placeholder = UIImage.init(named: "avatar-placeholder")
     }
 }
 

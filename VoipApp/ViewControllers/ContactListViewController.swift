@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 
+
 class ContactListViewController: UIViewController {
 
     // UI
@@ -19,7 +20,7 @@ class ContactListViewController: UIViewController {
         }
     }
     
-    private lazy var systemContactManager = SystemContactsManager()
+    private lazy var systemContactManager = SystemContactsManager.shared
     private lazy var databaseManager = DatabaseManager.shared
     private var segmentedControl: UISegmentedControl!
     private var allSections: [VoipModels.ContactSection] = []
@@ -80,13 +81,8 @@ extension ContactListViewController: UITableViewDelegate {
         let editAction = UITableViewRowAction.init(style: .default, title: "Edit") { [weak self] (action, indexPath) in
             guard let self = self else { return }
             
-            let contact = self.allSections[indexPath.section - 1].contacts[indexPath.item]
-            self.systemContactManager.execute(operation: .edit(contact: contact), then: { [weak self] success in
-                if let id = contact.entityId {
-                    self?.databaseManager.updateContact(withId: id, phoneNumber: contact.number, name: contact.name, image: contact.avatar)
-                }
-                // Reload
-            })
+            let contact = self.currectSections[indexPath.section - 1].contacts[indexPath.item]
+            self.presentDetail(for: contact)
         }
         editAction.backgroundColor = .system
         
@@ -94,7 +90,11 @@ extension ContactListViewController: UITableViewDelegate {
             guard let self = self else { return }
             
             let contact = self.allSections[indexPath.section - 1].contacts[indexPath.item]
-            self.systemContactManager.execute(operation: .delete(identifier: contact.identifier), then: { [weak self] success in
+            
+            guard let identifier = contact.identifier else { return }
+            
+            
+            self.systemContactManager.execute(operation: .delete(identifier: identifier), then: { [weak self] success in
                 if let id = contact.entityId { self?.databaseManager.deleteContact(withId: id) }
                 // Reload
             })
@@ -126,6 +126,13 @@ extension ContactListViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - ContactDetailDelegate
+extension ContactListViewController: ContactDetailsDelegate {
+    func contactDetail(didUpdateContact contact: VoipModels.VoipContact, with operation: VoipModels.OperationResult) {
+        fetchContacts()
+    }
+}
+
 // MARK: - Private Functions
 private extension ContactListViewController {
     func setupNavigationBar() {
@@ -147,20 +154,34 @@ private extension ContactListViewController {
     }
     
     func fetchContacts() {
-        let phoneNumbers = databaseManager.fetchContacts()
-        var tuples = [(Int32, String)]()
-        phoneNumbers?.forEach({ tuples.append(($0.id, $0.number!)) })
         
-        allSections = systemContactManager.fetchSectionedContacts(matchingIdsAndNumbers: tuples)
-        
-        allSections.forEach { section in
-            let contacts = section.contacts.filter({ $0.isVoipNumber })
-            if !contacts.isEmpty {
-                filteredSections.append(VoipModels.ContactSection.init(title: section.title, contacts: contacts))
-            }
+        // Fetch DB Contacts
+        databaseManager.fetchContacts { [weak self] contacts in
+            guard let contacts = contacts else { return }
+            
+            var tuples = [(Int32, String)]()
+            contacts.forEach({ tuples.append(($0.id, $0.number!)) })
+            
+            // Fetch System Contacts
+            self?.systemContactManager.fetchSectionedContacts(matchingIdsAndNumbers: tuples, then: { [weak self] sections in
+                guard let sections = sections else { return }
+                
+                self?.allSections = sections
+                
+                // Reset Filteres Sections
+                self?.filteredSections.removeAll()
+                
+                self?.allSections.forEach { section in
+                    let contacts = section.contacts.filter({ $0.isVoipNumber })
+                    if !contacts.isEmpty {
+                        self?.filteredSections.append(VoipModels.ContactSection.init(title: section.title, contacts: contacts))
+                    }
+                }
+                
+                self?.tableView.reloadData()
+                
+            })
         }
-        
-        tableView.reloadData()
     }
     
     func showContactAlert(to contact: VoipModels.VoipContact) {
@@ -190,10 +211,13 @@ private extension ContactListViewController {
         tableView.reloadData()
     }
     
-    @objc func addNewContactButtonTapped() {
-        // TODO:
+    @objc func addNewContactButtonTapped() { presentDetail() }
+    
+    func presentDetail(for contact: VoipModels.VoipContact? = nil) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let detailVC = storyboard.instantiateViewController(withIdentifier: "contact-detail-view-controller")
+        guard let detailVC = storyboard.instantiateViewController(withIdentifier: "contact-detail-view-controller") as? ContactDetailViewController else { return  }
+        detailVC.setContact(contact: contact, delegate: self)
+        
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
@@ -205,6 +229,9 @@ private extension ContactListViewController {
         static let alertValidContactMessageString = "You received a call from %@!"
         static let alertInvalidContactMessageString = "%@ is not a Voip Contact. Please select another"
         static let alertButtonTitleText = "OK"
+        static let firstNameText = "First Name:"
+        static let familyNameText = "Family Name:"
+        static let phoneNumberText = "Phone Number Text:"
     }
     
     struct Defaults {
