@@ -13,10 +13,10 @@ iOS 12.2
 
 
 ## Authors
-* **Luís Costa** - *iOS Developer* - [PurpleBooth](https://github.com/lmbcosta)
+* **Luís Costa** - *iOS Developer* - [Linkedin](https://github.com/lmbcosta)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/lmbcosta/VoipApp/blob/master/LICENSE) file for details
 
 
