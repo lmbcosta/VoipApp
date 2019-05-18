@@ -123,7 +123,10 @@ private extension CallHistoryViewController {
             guard let calls = calls else { return }
             
             self?.calls = calls
-            self?.tableView.reloadData()
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+            }
         }
     }
     
